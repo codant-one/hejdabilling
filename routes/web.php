@@ -1,0 +1,32 @@
+<?php
+
+use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\MainController;
+use App\Http\Controllers\AdminController;
+use App\Http\Controllers\PasswordController;
+/*
+|--------------------------------------------------------------------------
+| Web Routes
+|--------------------------------------------------------------------------
+|
+| Here is where you can register web routes for your application. These
+| routes are loaded by the RouteServiceProvider within a group which
+| contains the "web" middleware group. Now create something great!
+|
+*/
+
+Route::get('/',  [MainController::class, 'index'])->name('index');
+Route::get('/secretadmin',  [AdminController::class, 'index'])->name('admin.index');
+Route::post('/adminlogin',[AdminController::class, 'login'])->name('admin.login');
+
+//RUTAS PASSWORD
+Route::get('/forgot-adminpassword',  [PasswordController::class, 'forgot_adminpassword'])->name('admin.forgotpassword');
+Route::post('/admin/reset-confirm', [PasswordController::class, 'email_adminconfirmation'])->name('admin.confirm');
+Route::get('/admin/reset-password', [PasswordController::class, 'reset_adminpassword'])->name('admin.reset.password');
+Route::get('password/find/{token}', [PasswordController::class, 'find'])->name("admin.passwordfind");
+Route::post('/admin/change', [PasswordController::class, 'admin_change'])->name("admin.change");
+//FIN RUTAS PASSWORD
+Route::middleware(['auth'])->group(function () 
+{
+    Route::get('/dashboard',  [AdminController::class, 'dashboard'])->name('admin.dashboard');
+});
