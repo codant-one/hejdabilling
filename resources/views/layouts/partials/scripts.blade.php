@@ -21,13 +21,22 @@
     <script src="{{ asset('/assets/vendor/libs/i18n/i18n.js') }}"></script>
     <script src="{{ asset('/assets/vendor/libs/typeahead-js/typeahead.js') }}"></script>
     <script src="{{ asset('/assets/vendor/js/menu.js') }}"></script>
+
     <!-- endbuild -->
 
     <!-- Vendors JS -->
     <script src="{{ asset('/assets/vendor/libs/formvalidation/dist/js/FormValidation.min.js') }}"></script>
     <script src="{{ asset('/assets/vendor/libs/formvalidation/dist/js/plugins/Bootstrap5.min.js') }}"></script>
     <script src="{{ asset('/assets/vendor/libs/formvalidation/dist/js/plugins/AutoFocus.min.js') }}"></script>
+    <script src="{{ asset('/assets/vendor/libs/datatables-bs5/datatables-bootstrap5.js') }}"></script>
 
+    
+    <script src="{{ asset('/assets/vendor/libs/cleavejs/cleave.js') }}"></script>
+    <script src="{{ asset('/assets/vendor/libs/cleavejs/cleave-phone.js') }}"></script>
+    <script src="{{ asset('/assets/vendor/libs/select2/select2.js') }}"></script>
+    <script src="{{ asset('/assets/vendor/libs/bs-stepper/bs-stepper.js') }}"></script>
+    
+    <script src="{{ asset('/assets/vendor/libs/sweetalert2/sweetalert2.js') }}"></script>
 <!----------------fin public/vendor----------------------------->
 
 
@@ -36,8 +45,20 @@
 <!-- Main JS -->
 <script src="{{ asset('/assets/js/main.js') }}"></script>
 <!-- Page JS -->
-<script src="{{ asset('/assets/js/pages-auth.js') }}"></script>
 
+<script src="{{ asset('/assets//js/pages-pricing.js') }}"></script>
+<script src="{{ asset('/assets/js/pages-auth.js') }}"></script>
+<script src="{{ asset('/assets/js/pages-profile.js') }}"></script>
+
+<script src="{{ asset('/assets/js/modal-add-new-cc.js') }}"></script>
+<script src="{{ asset('/assets/js/modal-add-new-address.js') }}"></script>
+<script src="{{ asset('/assets/js/modal-edit-user.js') }}"></script>
+<script src="{{ asset('/assets/js/modal-enable-otp.js') }}"></script>
+<script src="{{ asset('/assets/js/modal-share-project.js') }}"></script>
+<script src="{{ asset('/assets/js/modal-create-app.js') }}"></script>
+<script src="{{ asset('/assets/js/modal-two-factor-auth.js') }}"></script>
+
+<script src="{{ asset('/assets/js/pages-account-settings-account.js') }}"></script>
 
 <!--------------------------fin public/js---------------->
 
