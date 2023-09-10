@@ -36,7 +36,13 @@
     <script src="{{ asset('/assets/vendor/libs/select2/select2.js') }}"></script>
     <script src="{{ asset('/assets/vendor/libs/bs-stepper/bs-stepper.js') }}"></script>
     
+    <script src="{{ asset('/assets/vendor/js/dropdown-hover.js') }}"></script>
+    <script src="{{ asset('/assets/vendor/js/mega-dropdown.js') }}"></script>
+    
     <script src="{{ asset('/assets/vendor/libs/sweetalert2/sweetalert2.js') }}"></script>
+
+    <script src="{{ asset('/assets/vendor/libs/flatpickr/flatpickr.js') }}"></script>
+    <script src="{{ asset('/assets/vendor/libs/jquery-repeater/jquery-repeater.js') }}"></script>
 <!----------------fin public/vendor----------------------------->
 
 
@@ -58,7 +64,13 @@
 <script src="{{ asset('/assets/js/modal-create-app.js') }}"></script>
 <script src="{{ asset('/assets/js/modal-two-factor-auth.js') }}"></script>
 
+<script src="{{ asset('/assets/js/offcanvas-send-invoice.js') }}"></script>
+<script src="{{ asset('/assets/js/app-invoice-add.js') }}"></script>
+
+<script src="{{ asset('/assets/js/pages-auth-two-steps.js') }}"></script>
 <script src="{{ asset('/assets/js/pages-account-settings-account.js') }}"></script>
+
+<script src="{{ asset('/assets/js/ui-navbar.js') }}"></script>
 
 <!--------------------------fin public/js---------------->
 

@@ -42,7 +42,7 @@
             <h3 class="mb-1 fw-bold">Welcome to Hejdabilling! 👋</h3>
             <p class="mb-4">Please sign-in to your account</p>
 
-            <form id="formAuthentication" class="mb-3" action="{{route('admin.login')}}" method="POST">
+            <form id="formAuthentication" class="mb-3" action="{{route('admin.authenticate')}}" method="POST">
               <div class="mb-3">
                 <label for="email" class="form-label">Email or Username</label>
                 <input

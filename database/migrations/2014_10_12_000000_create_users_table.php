@@ -27,6 +27,7 @@ class CreateUsersTable extends Migration
             $table->string('logo_company')->nullable();
             $table->string('color_company')->nullable();
             $table->string('password');
+            $table->longText('token_2fa')->nullable();
             $table->timestamp('email_verified_at')->nullable();
             $table->rememberToken();
             $table->timestamps();

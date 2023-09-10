@@ -15,6 +15,44 @@ class AdminController extends Controller
         return view("admin.login.index");
     }
 
+    public function authenticate(Request $request)
+    {
+        $credentials = $request->only('email', 'password');
+
+        if (Auth::attempt($credentials)) {
+            $request->session()->regenerate();
+            $user = Auth::user();
+
+            if (auth()->user()->can('user_ban')) {
+                abort(403, 'Ud ha sido baneado, no tienes permiso para esta acción.');
+            }
+
+            if (env('APP_DEBUG')) {
+                session()->put('2fa', '1');
+
+                return redirect()->route('admin.dashboard');
+             }
+
+            if (empty($user->token_2fa)) {
+                $google2fa = app('pragmarx.google2fa');
+                $token = $google2fa->generateSecretKey();
+
+                $user->token_2fa = $token;
+                $user->update();
+
+                $request->session()->flash('user', $user);
+
+                return redirect()->route('auth.2fa.generate');
+            } else {
+                return redirect(route('auth.2fa'));
+            }
+        }
+
+        return back()->withErrors([
+            'email' => 'Las credenciales no coindicen.',
+        ]);
+    }
+
     public function login(Request $request)
     {
         $credentials = request(['email', 'password']);
@@ -30,6 +68,45 @@ class AdminController extends Controller
         
     }
 
+
+    public function validate_double_factor_auth(Request $request)
+    {
+        $user = auth()->user();
+        $google2fa = app('pragmarx.google2fa');
+        
+        if ($google2fa->verifyKey($user->token_2fa, $request->otp)) {
+            session()->put('2fa', '1');
+            session()->put('login', 'admin');
+
+            return redirect()->route('admin.dashboard');
+        }
+
+        return redirect()->back()->withErrors(['error' => 'Código de verificación incorrecto']);
+    }
+
+    public function generate_double_factor_auth()
+    {
+        $google2fa = app('pragmarx.google2fa');
+
+        $user = auth()->user();
+        $token = $user->token_2fa;
+
+        $qr = $google2fa->getQRCodeInline(
+            config('app.name'),
+            $user->email,
+            $token
+        );
+
+        return view('admin.login.two-steps', compact('user', 'qr', 'token'));
+    }
+
+    public function double_factor_auth()
+    {
+        $user = auth()->user();
+        $token = $user->token_2fa;
+
+        return view('admin.login.2fa', compact('user', 'token'));
+    }
 
     public function dashboard()
     {
@@ -73,10 +150,21 @@ class AdminController extends Controller
              
         }
 
+        $users->name = $request->name;
+        $users->lastname = $request->lastname;
+        $users->company = $request->company;
+        $users->phone_company = $request->phone_company;
+        $users->address_company = $request->address_company;
+
         $users->save();
-        return view("admin.dashboard.profile.edit"); 
+        return view("admin.dashboard.profile.index"); 
        
         
 
     }
+
+    public function two_steps()
+    {
+        return view("admin.login.two-steps");
+    } 
 }

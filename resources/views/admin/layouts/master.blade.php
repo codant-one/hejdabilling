@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="es" style="overflow-x: hidden;"
+<html lang="es"
 class="light-style layout-navbar-fixed layout-menu-fixed layout-menu-collapsed"
   dir="ltr"
   data-theme="theme-default"

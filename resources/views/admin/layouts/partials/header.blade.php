@@ -1,7 +1,7 @@
 <head>   
     <meta charset="UTF-8">
     
-    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <meta name="_token" content="{{ csrf_token() }}">
     <meta name="base_url" content="{{ url('') }}">
@@ -65,9 +65,12 @@
     <link rel="stylesheet" href="{{asset('/assets/vendor/libs/bs-stepper/bs-stepper.css')}}" />
     <link rel="stylesheet" href="{{asset('/assets/vendor/libs/animate-css/animate.css')}}" />
     <link rel="stylesheet" href="{{asset('/assets/vendor/libs/sweetalert2/sweetalert2.css')}}" />
+    <link rel="stylesheet" href="{{asset('/assets/vendor/libs/flatpickr/flatpickr.css')}}" />
     
     <!-- Page CSS -->
     <link rel="stylesheet" href="{{asset('/assets/vendor/css/pages/page-profile.css')}}" />
+    <link rel="stylesheet" href="{{asset('/assets/vendor/css/pages/page-auth.css')}}" />
+    <link rel="stylesheet" href="{{asset('/assets/vendor/css/pages/app-invoice.css')}}" />
     <!-- Helpers -->
     
     <script src="{{asset('/assets/vendor/js/helpers.js')}}"></script>
@@ -77,5 +80,4 @@
     <script src="{{asset('/assets/vendor/js/template-customizer.js')}}"></script>
     <!--? Config:  Mandatory theme config file contain global vars & default theme options, Set your preferred theme option in this file.  -->
     <script src="{{asset('/assets/js/config.js')}}"></script>
-
 </head> 

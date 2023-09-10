@@ -101,9 +101,9 @@
               <span class="menu-header-text">Apps &amp; Pages</span>
             </li>
             <li class="menu-item">
-              <a href="app-email.html" class="menu-link">
-                <i class="menu-icon tf-icons ti ti-mail"></i>
-                <div data-i18n="Email">Email</div>
+              <a href="{{route('admin.profile')}}" class="menu-link">
+                <i class="menu-icon tf-icons ti ti-users"></i>
+                <div data-i18n="Profile">Profile</div>
               </a>
             </li>
             <!--<li class="menu-item">
@@ -112,18 +112,7 @@
                 <div data-i18n="Chat">Chat</div>
               </a>
             </li>-->
-            <li class="menu-item">
-              <a href="app-calendar.html" class="menu-link">
-                <i class="menu-icon tf-icons ti ti-calendar"></i>
-                <div data-i18n="Calendar">Calendar</div>
-              </a>
-            </li>
-            <!--<li class="menu-item">
-              <a href="app-kanban.html" class="menu-link">
-                <i class="menu-icon tf-icons ti ti-layout-kanban"></i>
-                <div data-i18n="Kanban">Kanban</div>
-              </a>
-            </li>-->
+
             <li class="menu-item">
               <a href="javascript:void(0);" class="menu-link menu-toggle">
                 <i class="menu-icon tf-icons ti ti-file-dollar"></i>
@@ -153,6 +142,20 @@
                 </li>
               </ul>
             </li>
+
+            <li class="menu-item">
+              <a href="app-calendar.html" class="menu-link">
+                <i class="menu-icon tf-icons ti ti-calendar"></i>
+                <div data-i18n="Calendar">Calendar</div>
+              </a>
+            </li>
+            <!--<li class="menu-item">
+              <a href="app-kanban.html" class="menu-link">
+                <i class="menu-icon tf-icons ti ti-layout-kanban"></i>
+                <div data-i18n="Kanban">Kanban</div>
+              </a>
+            </li>-->
+            
             <li class="menu-item">
               <a href="javascript:void(0);" class="menu-link menu-toggle">
                 <i class="menu-icon tf-icons ti ti-users"></i>

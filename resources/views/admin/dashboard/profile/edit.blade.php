@@ -65,19 +65,21 @@
                      <!-- <form action="{{route('admin.profile.update')}}" method="POST" enctype="multipart/form-data" >-->
                         <div class="row">
                           <div class="mb-3 col-md-6">
-                            <label for="firstName" class="form-label">First Name</label>
+                            <label for="firstName" class="form-label">Name</label>
                             <input
                               class="form-control"
                               type="text"
                               id="firstName"
                               name="name"
                               value="{{auth()->user()->name}}"
+                              placeholder="Name"
                               autofocus
+                              require
                             />
                           </div>
                           <div class="mb-3 col-md-6">
                             <label for="lastName" class="form-label">Last Name</label>
-                            <input class="form-control" type="text" name="lastname" id="lastName" value="{{auth()->user()->lastname}}" />
+                            <input class="form-control" type="text" name="lastname" id="lastName" value="{{auth()->user()->lastname}}" placeholder="Lastname" require/>
                           </div>
                           <div class="mb-3 col-md-6">
                             <label for="email" class="form-label">E-mail</label>
@@ -97,7 +99,9 @@
                               class="form-control"
                               id="organization"
                               name="company"
+                              value="{{auth()->user()->company}}"
                               placeholder="{{auth()->user()->company}}"
+                              require
                             />
                           </div>
                           <div class="mb-3 col-md-6">
@@ -109,13 +113,14 @@
                                 id="phoneNumber"
                                 name="phone_company"
                                 class="form-control"
+                                value="{{auth()->user()->phone_company}}"
                                 placeholder="{{auth()->user()->phone_company}}"
                               />
                             </div>
                           </div>
                           <div class="mb-3 col-md-6">
                             <label for="address" class="form-label">Address</label>
-                            <input type="text" class="form-control" id="address" name="address_company" placeholder="{{auth()->user()->address_company}}" />
+                            <input type="text" class="form-control" id="address" name="address_company" value="{{auth()->user()->address_company}}" placeholder="{{auth()->user()->address_company}}" />
                           </div>
                           <div class="mb-3 col-md-6">
                             <label for="formFile" class="form-label">Upload company logo</label>
