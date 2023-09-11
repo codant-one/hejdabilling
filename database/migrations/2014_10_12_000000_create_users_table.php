@@ -20,12 +20,6 @@ class CreateUsersTable extends Migration
             $table->string('email')->unique();
             $table->string('nick');
             $table->string('avatar')->nullable();
-            $table->string('company')->nullable();
-            $table->string('country_company')->nullable();
-            $table->string('address_company')->nullable();
-            $table->string('phone_company')->nullable();
-            $table->string('logo_company')->nullable();
-            $table->string('color_company')->nullable();
             $table->string('password');
             $table->longText('token_2fa')->nullable();
             $table->timestamp('email_verified_at')->nullable();

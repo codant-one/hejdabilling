@@ -39,8 +39,8 @@
                             <ul
                               class="list-inline mb-0 d-flex align-items-center flex-wrap justify-content-sm-start justify-content-center gap-2"
                             >
-                              <li class="list-inline-item"><i class="ti ti-color-swatch"></i> {{auth()->user()->company}}</li>
-                              <li class="list-inline-item"><i class="ti ti-map-pin"></i> {{auth()->user()->country_company}}</li>
+                              <li class="list-inline-item"><i class="ti ti-color-swatch"></i> Compañia</li>
+                              <li class="list-inline-item"><i class="ti ti-map-pin"></i> País</li>
                               <li class="list-inline-item"><i class="ti ti-calendar"></i> Joined {{auth()->user()->created_at->format('d F Y')}}</li>
                             </ul>
                           </div>
@@ -108,18 +108,18 @@
 
                         <li class="d-flex align-items-center mb-3">
                           <i class="ti ti-brand-skype"></i><span class="fw-bold mx-2">Name:</span>
-                          <span>{{auth()->user()->company}}</span>
+                          <span>Company</span>
                         </li>
                         <li class="d-flex align-items-center mb-3">
-                          <i class="ti ti-flag"></i><span class="fw-bold mx-2">Country:</span> <span>{{auth()->user()->country_company}}</span>
+                          <i class="ti ti-flag"></i><span class="fw-bold mx-2">Country:</span> <span>Country</span>
                         </li>
                         <li class="d-flex align-items-center mb-3">
                           <i class="ti ti-phone-call"></i><span class="fw-bold mx-2">Contact:</span>
-                          <span>{{auth()->user()->phone_company}}</span>
+                          <span>Phone Company</span>
                         </li>
                         <li class="d-flex align-items-center mb-3">
                           <i class="ti ti-map-pin"></i><span class="fw-bold mx-2">Address:</span>
-                          <span>{{auth()->user()->address_company}}</span>
+                          <span>Address Company</span>
                         </li>
                         
                       </ul>
@@ -194,7 +194,7 @@
                           <span class="timeline-point timeline-point-primary"></span>
                           <div class="timeline-event">
                             <div class="timeline-header">
-                              <h6 class="mb-0">{{auth()->user()->company}}</h6>
+                              <h6 class="mb-0">Company</h6>
                               <small class="text-muted">Today</small>
                             </div> <br>
                             <!--<p class="mb-2">Project meeting with john @10:15am</p>-->
@@ -204,7 +204,7 @@
                               </div>
                               <div class="ms-1">
                                 <h6 class="mb-0">{{auth()->user()->nick}}</h6>
-                                <span>{{auth()->user()->address_company}}</span>
+                                <span>Address Company </span>
                               </div>
                             </div>
                           </div>

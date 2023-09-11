@@ -99,8 +99,8 @@
                               class="form-control"
                               id="organization"
                               name="company"
-                              value="{{auth()->user()->company}}"
-                              placeholder="{{auth()->user()->company}}"
+                              value="Company"
+                              placeholder="Company"
                               require
                             />
                           </div>
@@ -113,14 +113,14 @@
                                 id="phoneNumber"
                                 name="phone_company"
                                 class="form-control"
-                                value="{{auth()->user()->phone_company}}"
-                                placeholder="{{auth()->user()->phone_company}}"
+                                value="Phone Company"
+                                placeholder="Phone Company"
                               />
                             </div>
                           </div>
                           <div class="mb-3 col-md-6">
                             <label for="address" class="form-label">Address</label>
-                            <input type="text" class="form-control" id="address" name="address_company" value="{{auth()->user()->address_company}}" placeholder="{{auth()->user()->address_company}}" />
+                            <input type="text" class="form-control" id="address" name="address_company" value="Address Company" placeholder="Address Company" />
                           </div>
                           <div class="mb-3 col-md-6">
                             <label for="formFile" class="form-label">Upload company logo</label>

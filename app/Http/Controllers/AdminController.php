@@ -152,9 +152,9 @@ class AdminController extends Controller
 
         $users->name = $request->name;
         $users->lastname = $request->lastname;
-        $users->company = $request->company;
-        $users->phone_company = $request->phone_company;
-        $users->address_company = $request->address_company;
+        //$users->company = $request->company;
+        //$users->phone_company = $request->phone_company;
+        //$users->address_company = $request->address_company;
 
         $users->save();
         return view("admin.dashboard.profile.index"); 

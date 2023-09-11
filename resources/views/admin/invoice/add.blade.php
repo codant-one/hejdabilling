@@ -13,13 +13,46 @@
                       <div class="row m-sm-4 m-0">
                         <div class="col-md-7 mb-md-0 mb-4 ps-0">
                           <div class="d-flex svg-illustration mb-4 gap-2 align-items-center">
-                            <img src="{{auth()->user()->logo_company}}" alt="logo" width="60">
+                            <svg
+                              width="32"
+                              height="22"
+                              viewBox="0 0 32 22"
+                              fill="none"
+                              xmlns="http://www.w3.org/2000/svg"
+                            >
+                              <path
+                                fill-rule="evenodd"
+                                clip-rule="evenodd"
+                                d="M0.00172773 0V6.85398C0.00172773 6.85398 -0.133178 9.01207 1.98092 10.8388L13.6912 21.9964L19.7809 21.9181L18.8042 9.88248L16.4951 7.17289L9.23799 0H0.00172773Z"
+                                fill="#7367F0"
+                              />
+                              <path
+                                opacity="0.06"
+                                fill-rule="evenodd"
+                                clip-rule="evenodd"
+                                d="M7.69824 16.4364L12.5199 3.23696L16.5541 7.25596L7.69824 16.4364Z"
+                                fill="#161616"
+                              />
+                              <path
+                                opacity="0.06"
+                                fill-rule="evenodd"
+                                clip-rule="evenodd"
+                                d="M8.07751 15.9175L13.9419 4.63989L16.5849 7.28475L8.07751 15.9175Z"
+                                fill="#161616"
+                              />
+                              <path
+                                fill-rule="evenodd"
+                                clip-rule="evenodd"
+                                d="M7.77295 16.3566L23.6563 0H32V6.88383C32 6.88383 31.8262 9.17836 30.6591 10.4057L19.7824 22H13.6938L7.77295 16.3566Z"
+                                fill="#7367F0"
+                              />
+                            </svg>
 
-                            <span class="app-brand-text fw-bold fs-4"> {{auth()->user()->company}} </span>
+                            <span class="app-brand-text fw-bold fs-4"> Vuexy </span>
                           </div>
-                          <p class="mb-2">{{auth()->user()->address_company}}</p>
-                          <p class="mb-2">{{auth()->user()->country_company}}</p>
-                          <p class="mb-3">{{auth()->user()->phone_company}}</p>
+                          <p class="mb-2">Office 149, 450 South Brand Brooklyn</p>
+                          <p class="mb-2">San Diego County, CA 91905, USA</p>
+                          <p class="mb-3">+1 (123) 456 7891, +44 (876) 543 2198</p>
                         </div>
                         <div class="col-md-5">
                           <dl class="row mb-2">
@@ -56,17 +89,15 @@
                       </div>
 
                       <hr class="my-3 mx-n4" />
-                     <form class="source-item pt-4 px-0 px-sm-4">
+
                       <div class="row p-sm-4 p-0">
                         <div class="col-md-6 col-sm-5 col-12 mb-sm-0 mb-4">
-                          
                           <h6 class="mb-4">Invoice To:</h6>
-                          <input type="text" class="form-control w-px-250" name="name" placeholder="Name" /> 
-                          <input type="text" class="form-control w-px-250" name="company" placeholder="Company" /> 
-                          <input type="text" class="form-control w-px-250" name="address_company" placeholder="Address" />
-                          <input type="text" class="form-control w-px-250" name="country" placeholder="Country" />
-                          <input type="text" class="form-control w-px-250" name="phone_company" placeholder="Phone" />
-                          <input type="email" class="form-control w-px-250" name="email" placeholder="E-mail" />
+                          <p class="mb-1">Thomas shelby</p>
+                          <p class="mb-1">Shelby Company Limited</p>
+                          <p class="mb-1">Small Heath, B10 0HF, UK</p>
+                          <p class="mb-1">718-986-6062</p>
+                          <p class="mb-0">peakyFBlinders@gmail.com</p>
                         </div>
                         <div class="col-md-6 col-sm-7">
                           <h6 class="mb-4">Bill To:</h6>
@@ -99,7 +130,7 @@
 
                       <hr class="my-3 mx-n4" />
 
-                    
+                      <form class="source-item pt-4 px-0 px-sm-4">
                         <div class="mb-3" data-repeater-list="group-a">
                           <div class="repeater-wrapper pt-0 pt-md-4" data-repeater-item>
                             <div class="d-flex border rounded position-relative pe-0">
