@@ -93,11 +93,11 @@
                       <div class="row p-sm-4 p-0">
                         <div class="col-md-6 col-sm-5 col-12 mb-sm-0 mb-4">
                           <h6 class="mb-4">Invoice To:</h6>
-                          <p class="mb-1">Thomas shelby</p>
-                          <p class="mb-1">Shelby Company Limited</p>
-                          <p class="mb-1">Small Heath, B10 0HF, UK</p>
-                          <p class="mb-1">718-986-6062</p>
-                          <p class="mb-0">peakyFBlinders@gmail.com</p>
+                          <p class="mb-1">{{$client->name}} {{$client->lastname}}</p>
+                          <p class="mb-1">{{$client->name_company}}</p>
+                          <p class="mb-1">{{$client->address}}</p>
+                          <p class="mb-1">{{$client->phone}}</p>
+                          <p class="mb-0">{{$client->email}}</p>
                         </div>
                         <div class="col-md-6 col-sm-7">
                           <h6 class="mb-4">Bill To:</h6>

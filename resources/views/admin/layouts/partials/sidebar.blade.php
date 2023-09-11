@@ -121,8 +121,8 @@
               </a>
               <ul class="menu-sub">
                 <li class="menu-item">
-                  <a href="app-invoice-list.html" class="menu-link">
-                    <div data-i18n="List">List</div>
+                  <a href="{{route('invoice.client')}}" class="menu-link">
+                    <div data-i18n="List">Clients</div>
                   </a>
                 </li>
                 <li class="menu-item">
@@ -136,7 +136,7 @@
                   </a>
                 </li>
                 <li class="menu-item">
-                  <a href="app-invoice-add.html" class="menu-link">
+                  <a href="#" class="menu-link">
                     <div data-i18n="Add">Add</div>
                   </a>
                 </li>

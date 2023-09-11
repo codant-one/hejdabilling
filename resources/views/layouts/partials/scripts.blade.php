@@ -43,6 +43,9 @@
 
     <script src="{{ asset('/assets/vendor/libs/flatpickr/flatpickr.js') }}"></script>
     <script src="{{ asset('/assets/vendor/libs/jquery-repeater/jquery-repeater.js') }}"></script>
+    <script src="{{ asset('/assets/vendor/libs/moment/moment.js') }}"></script>
+    
+
 <!----------------fin public/vendor----------------------------->
 
 
@@ -69,6 +72,7 @@
 
 <script src="{{ asset('/assets/js/pages-auth-two-steps.js') }}"></script>
 <script src="{{ asset('/assets/js/pages-account-settings-account.js') }}"></script>
+<script src="{{ asset('/assets/js/app-user-list.js') }}"></script>
 
 <script src="{{ asset('/assets/js/ui-navbar.js') }}"></script>
 

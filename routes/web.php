@@ -34,7 +34,9 @@ Route::middleware(['auth'])->group(function ()
     Route::get('/profile',  [AdminController::class, 'profile'])->name('admin.profile');
     Route::get('/profile/edit',  [AdminController::class, 'profile_edit'])->name('admin.profile.edit');
     Route::post('/profile/update',  [AdminController::class, 'profile_update'])->name('admin.profile.update');
-    Route::get('/add-invoice', [InvoiceController::class, 'create_invoice'])->name('invoice.create');
+    Route::get('add-invoice/{id}', [InvoiceController::class, 'create_invoice'])->name('invoice.create');
+    Route::get('/list-clients', [InvoiceController::class, 'list_client'])->name('invoice.client');
+    Route::post('/register-clients', [InvoiceController::class, 'add_client'])->name('invoice.add.client');
 
 });
 
