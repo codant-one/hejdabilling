@@ -5,9 +5,11 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use App\Models\User;
+use App\Models\Company;
 use App\Models\Client;
 use Carbon\Carbon;
 use Validator;
+use PDF;
 
 class InvoiceController extends Controller
 {
@@ -15,7 +17,8 @@ class InvoiceController extends Controller
     public function create_invoice($id)
     {
         $client = Client::with(['user'])->where('id',$id)->first();
-        return view("admin.invoice.add", compact('client'));
+        $company = Company::with(['user','payment_method', 'country'])->where('user_id',auth()->user()->id)->first();
+        return view("admin.invoice.add", compact('client','company'));
     }
     
 
@@ -59,6 +62,20 @@ class InvoiceController extends Controller
         return redirect()->route('invoice.client')->with('jsAlert', "Customer successfully registered.");
    
 
+    }
+
+    public function generate_invoice(Request $request, $parametro)
+
+    {
+        $pdf = PDF::setOptions(['isHtml5ParserEnabled' => true, 'isRemoteEnabled' => true])->loadView('admin.invoice.pdf.plantilla')->setOptions(['defaultFont' => 'sans-serif'])->save(storage_path('app/public/pdfs').'/'.'prueba'.'.pdf');
+        
+
+        return $pdf->download('invoice-hejdabilling.pdf');
+    }
+
+    public function preview()
+    {
+        return view('admin.invoice.pdf.invoice');
     }
 
 }

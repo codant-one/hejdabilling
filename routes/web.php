@@ -5,6 +5,7 @@ use App\Http\Controllers\MainController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\PasswordController;
 use App\Http\Controllers\InvoiceController;
+use Barryvdh\DomPDF\Facade as PDF;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -37,6 +38,10 @@ Route::middleware(['auth'])->group(function ()
     Route::get('add-invoice/{id}', [InvoiceController::class, 'create_invoice'])->name('invoice.create');
     Route::get('/list-clients', [InvoiceController::class, 'list_client'])->name('invoice.client');
     Route::post('/register-clients', [InvoiceController::class, 'add_client'])->name('invoice.add.client');
+    Route::post('/generate-invoice/{id}', [InvoiceController::class, 'generate_invoice'])->name('invoice.generate');
+    Route::get('/preview', [InvoiceController::class, 'preview'])->name('invoice.preview');
+
+
 
 });
 

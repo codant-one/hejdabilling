@@ -93,17 +93,70 @@
                             />
                           </div>
                           <div class="mb-3 col-md-6">
-                            <label for="organization" class="form-label">Company</label>
+                            <label for="email" class="form-label">Nick</label>
+                            <input
+                              class="form-control"
+                              type="text"
+                              id="email"
+                              name="nick"
+                              placeholder="{{auth()->user()->nick}}"
+                              readonly
+                            />
+                          </div> <!-- Fin datos usuarios-->
+
+                        <h5 class="card-header">Company Information</h5>  
+                        <!------------DATOS COMPAÑIA---------->
+
+                          <div class="mb-3 col-md-6">
+                              <label for="organization" class="form-label">Country</label>
+                              <select class="form-control"
+                                  name="country_id"
+                                  id="country"
+                                  required>
+                                  <option value="">Seleccione</option>
+                                  @foreach ($countries as $key => $country)
+                                      <option value="{{ $key }}" 
+                                          {{ empty($user->company) ?  '' : (($key == $user->company->country_id) ? 'selected' : '') }}>{{ $country }}</option>
+                                  @endforeach
+                              </select>
+                          </div>
+
+                          <div class="mb-3 col-md-6">
+                            <label for="organization" class="form-label">Name Company</label>
                             <input
                               type="text"
                               class="form-control"
                               id="organization"
                               name="company"
-                              value="Company"
-                              placeholder="Company"
+                              value="{{$user['company']['name'] ?? null}}"
+                              placeholder="Company Name"
                               require
                             />
                           </div>
+
+                          <div class="mb-3 col-md-6">
+                            <label class="form-label" for="phoneNumber">Org Number</label>
+                            
+                              <input
+                                type="text"
+                                name="org_number"
+                                class="form-control"
+                                value="{{$user['company']['org_number'] ?? null}}"
+                                placeholder="Org Number"
+                              />
+                            
+                          </div>
+
+                          <div class="mb-3 col-md-6">
+                            <label  class="form-label">E-mail Company</label>
+                            <input type="email" class="form-control"  name="email_company" value="{{$user['company']['email'] ?? null}}" placeholder="E-mail Company" />
+                          </div>
+
+                          <div class="mb-3 col-md-6">
+                            <label for="address" class="form-label">Address</label>
+                            <input type="text" class="form-control" id="address" name="address" value="{{$user['company']['address'] ?? null}}" placeholder="Address Company" />
+                          </div>
+
                           <div class="mb-3 col-md-6">
                             <label class="form-label" for="phoneNumber">Phone Number</label>
                             <div class="input-group input-group-merge">
@@ -111,22 +164,46 @@
                               <input
                                 type="text"
                                 id="phoneNumber"
-                                name="phone_company"
-                                class="form-control"
-                                value="Phone Company"
+                                name="phone"
+                                class="form-control  phone-mask"
+                                value="{{$user['company']['phone'] ?? null}}"
                                 placeholder="Phone Company"
                               />
                             </div>
                           </div>
-                          <div class="mb-3 col-md-6">
-                            <label for="address" class="form-label">Address</label>
-                            <input type="text" class="form-control" id="address" name="address_company" value="Address Company" placeholder="Address Company" />
-                          </div>
+                          
                           <div class="mb-3 col-md-6">
                             <label for="formFile" class="form-label">Upload company logo</label>
-                            <input class="form-control" type="file" id="formFile" name="logo_company" />
+                            <input class="form-control" type="file" id="formFile" name="logo" />
                           </div>
+                          <!------------FIN DATOS COMPAÑIA---------->
+                          <!----------------DATOS DE PAGO---------------------->
+                          <h5 class="card-header">Payment information</h5>
+                          
+                          <div class="mb-3 col-md-6">
+                            <label class="form-label">Bank Name</label>
+                            <input type="text" class="form-control"  name="name_bank" value="{{$user['company']['payment_method']['name_bank'] ?? null}}" placeholder="Bank Name" />
+                          </div>
+
+                          <div class="mb-3 col-md-6">
+                            <label  class="form-label">Account Number</label>
+                            <input  type="text" class="form-control"  name="account_number" value="{{$user['company']['payment_method']['account_number'] ?? null}}" placeholder="Account Number" />
+                          </div>
+
+                          <div class="mb-3 col-md-6">
+                            <label  class="form-label">IBAN</label>
+                            <input  type="text" class="form-control"  name="iban" value="{{$user['company']['payment_method']['iban'] ?? null}}" placeholder="Iban" />
+                          </div>
+
+                          <div class="mb-3 col-md-6">
+                            <label  class="form-label">Swish</label>
+                            <input  type="text" class="form-control"  name="swish" value="{{$user['company']['payment_method']['swish'] ?? null}}" placeholder="Swish" />
+                          </div>
+
+                      <!------------FIN DATOS DE PAGO---------------------->
                         </div>
+                        
+                        
                         <div class="mt-2">
                            @csrf
                           <button type="submit" class="btn btn-primary me-2">Save changes</button>

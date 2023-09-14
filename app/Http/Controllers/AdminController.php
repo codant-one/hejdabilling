@@ -5,6 +5,10 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use App\Models\User;
+use App\Models\Client;
+use App\Models\Country;
+use App\Models\Company;
+use App\Models\PaymentMethod;
 use Carbon\Carbon;
 use Validator;
 
@@ -115,21 +119,82 @@ class AdminController extends Controller
 
     public function profile()
     {
-        return view("admin.dashboard.profile.index");
+        $companies = Company::with(['user','payment_method', 'country'])->where('user_id',auth()->user()->id)->first();
+        $cant_customer = Client::where('user_id', auth()->user()->id)->count();
+        //dd($companies);
+        return view("admin.dashboard.profile.index", compact('companies','cant_customer'));
     }
 
     public function profile_edit()
     {
-       return view("admin.dashboard.profile.edit");   
+       $countries = Country::forDropdown(); 
+       $user = User::with(['company.payment_method'])->find(auth()->user()->id);
+       return view("admin.dashboard.profile.edit", compact('countries','user'));   
     }
 
     public function profile_update(Request $request)
     {
 
         $users = User::find(auth()->user()->id);
+        $companies = Company::with(['user'])->where('user_id',$users->id)->first();
+
         $request->validate([
-            'logo_company' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
+            'logo' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
+        if($companies)
+        {
+           $companies->country_id = $request->country_id;
+           $companies->name = $request->company;
+           $companies->org_number = $request->org_number;
+           $companies->email = $request->email_company;
+           $companies->address = $request->address;   
+           $companies->phone = $request->phone;    
+            if ($request->hasFile('logo')) 
+            { 
+                $file = $request->file('logo');
+                $file_name = $users->name.Carbon::now()->format('Y-m-d').".".$file->extension();
+                $file->storeAs('logos', $file_name,'public');
+                $companies->logo = env('APP_URL').'/storage/logos'.'/'.$file_name;
+                
+            }
+
+            $companies->save();
+
+        }
+        
+        else 
+        {
+           $company= new Company();
+           $company->user_id = $users->id; 
+           $company->country_id = $request->country_id;
+           $company->name = $request->company;
+           $company->org_number = $request->org_number;
+           $company->email = $request->email_company;
+           $company->address = $request->address;   
+           $company->phone = $request->phone;   
+
+           if ($request->hasFile('logo')) 
+            { 
+                $file = $request->file('logo');
+                $file_name = $users->name.Carbon::now()->format('Y-m-d').".".$file->extension();
+                $file->storeAs('logos', $file_name,'public');
+                $company->logo = env('APP_URL').'/storage/logos'.'/'.$file_name;
+                
+            }
+
+            $company->save();
+
+            $payment = new PaymentMethod();
+
+            $payment->company_id = $company->id;
+            $payment->name_bank = $request->name_bank;
+            $payment->account_number = $request->account_number;
+            $payment->iban = $request->iban;
+            $payment->swish = $request->swish;
+
+            $payment->save();
+
+        }
 
         if($request->hasFile('avatar'))
         {
@@ -141,14 +206,7 @@ class AdminController extends Controller
 
         }
 
-        if ($request->hasFile('logo_company')) 
-        { 
-            $file = $request->file('logo_company');
-            $file_name = $users->name.Carbon::now()->format('Y-m-d').".".$file->extension();
-            $file->storeAs('logos', $file_name,'public');
-            $users->logo_company = env('APP_URL').'/storage/logos'.'/'.$file_name;
-             
-        }
+        
 
         $users->name = $request->name;
         $users->lastname = $request->lastname;
@@ -157,7 +215,8 @@ class AdminController extends Controller
         //$users->address_company = $request->address_company;
 
         $users->save();
-        return view("admin.dashboard.profile.index"); 
+
+        return redirect()->route('admin.profile')->with('jsAlert', "Data successfully updated");
        
         
 

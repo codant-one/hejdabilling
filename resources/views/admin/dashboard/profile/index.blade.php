@@ -39,8 +39,8 @@
                             <ul
                               class="list-inline mb-0 d-flex align-items-center flex-wrap justify-content-sm-start justify-content-center gap-2"
                             >
-                              <li class="list-inline-item"><i class="ti ti-color-swatch"></i> Compañia</li>
-                              <li class="list-inline-item"><i class="ti ti-map-pin"></i> País</li>
+                              <li class="list-inline-item"><i class="ti ti-color-swatch"></i> {{$companies->name}}</li>
+                              <li class="list-inline-item"><i class="ti ti-map-pin"></i> {{$companies->country->name}}</li>
                               <li class="list-inline-item"><i class="ti ti-calendar"></i> Joined {{auth()->user()->created_at->format('d F Y')}}</li>
                             </ul>
                           </div>
@@ -108,18 +108,18 @@
 
                         <li class="d-flex align-items-center mb-3">
                           <i class="ti ti-brand-skype"></i><span class="fw-bold mx-2">Name:</span>
-                          <span>Company</span>
+                          <span>{{$companies->name}}</span>
                         </li>
                         <li class="d-flex align-items-center mb-3">
-                          <i class="ti ti-flag"></i><span class="fw-bold mx-2">Country:</span> <span>Country</span>
+                          <i class="ti ti-flag"></i><span class="fw-bold mx-2">Org Num:</span> <span>{{$companies->org_number}}</span>
                         </li>
                         <li class="d-flex align-items-center mb-3">
                           <i class="ti ti-phone-call"></i><span class="fw-bold mx-2">Contact:</span>
-                          <span>Phone Company</span>
+                          <span>{{$companies->phone}}</span>
                         </li>
                         <li class="d-flex align-items-center mb-3">
                           <i class="ti ti-map-pin"></i><span class="fw-bold mx-2">Address:</span>
-                          <span>Address Company</span>
+                          <span>{{$companies->address}}</span>
                         </li>
                         
                       </ul>
@@ -194,71 +194,51 @@
                           <span class="timeline-point timeline-point-primary"></span>
                           <div class="timeline-event">
                             <div class="timeline-header">
-                              <h6 class="mb-0">Company</h6>
-                              <small class="text-muted">Today</small>
+                              <h6 class="mb-0">{{$companies->name}}</h6>
+                              
                             </div> <br>
                             <!--<p class="mb-2">Project meeting with john @10:15am</p>-->
                             <div class="d-flex flex-wrap">
                               <div class="avatar me-2">
-                                <img src="{{auth()->user()->logo_company}}" alt="Avatar" class="rounded-circle" />
+                                <img src="{{$companies->logo}}" alt="logo" class="rounded-circle" />
                               </div>
                               <div class="ms-1">
                                 <h6 class="mb-0">{{auth()->user()->nick}}</h6>
-                                <span>Address Company </span>
+                                <span>{{$companies->address}} </span>
                               </div>
                             </div>
                           </div>
                         </li>
-                        <!--<li class="timeline-item timeline-item-transparent">
+                        <li class="timeline-item timeline-item-transparent">
                           <span class="timeline-point timeline-point-success"></span>
                           <div class="timeline-event">
                             <div class="timeline-header">
-                              <h6 class="mb-0">Create a new project for client</h6>
-                              <small class="text-muted">2 Day Ago</small>
+                              <h6 class="mb-0">Payment Accounts</h6> <br> 
                             </div>
-                            <p class="mb-0">Add files to new design folder</p>
+                            <p class="mb-0">
+                              @foreach($companies->payment_method as $payment)
+                                Bank: {{$payment->name_bank}} <br>
+                                Account: {{$payment->account_number}} <br>
+                                IBAN: {{$payment->iban}} <br>
+                                SWISH: {{$payment->swish}}<br>
+                              @endforeach
+                            </p>
                           </div>
                         </li>
                         <li class="timeline-item timeline-item-transparent">
                           <span class="timeline-point timeline-point-danger"></span>
                           <div class="timeline-event">
                             <div class="timeline-header">
-                              <h6 class="mb-0">Shared 2 New Project Files</h6>
-                              <small class="text-muted">6 Day Ago</small>
+                              <h6 class="mb-0">billing data</h6>
+                              
                             </div>
                             <p class="mb-2">
-                              Sent by Mollie Dixon
-                              <img
-                                src="../../assets/img/avatars/4.png"
-                                class="rounded-circle me-3"
-                                alt="avatar"
-                                height="24"
-                                width="24"
-                              />
+                              Number of customers: {{$cant_customer}}
                             </p>
-                            <div class="d-flex flex-wrap gap-2 pt-1">
-                              <a href="javascript:void(0)" class="me-3">
-                                <img
-                                  src="../../assets/img/icons/misc/doc.png"
-                                  alt="Document image"
-                                  width="15"
-                                  class="me-2"
-                                />
-                                <span class="fw-semibold text-heading">App Guidelines</span>
-                              </a>
-                              <a href="javascript:void(0)">
-                                <img
-                                  src="../../assets/img/icons/misc/xls.png"
-                                  alt="Excel image"
-                                  width="15"
-                                  class="me-2"
-                                />
-                                <span class="fw-semibold text-heading">Testing Results</span>
-                              </a>
-                            </div>
+                           
                           </div>
                         </li>
-                        <li class="timeline-item timeline-item-transparent border-0">
+                        <!--<li class="timeline-item timeline-item-transparent border-0">
                           <span class="timeline-point timeline-point-info"></span>
                           <div class="timeline-event">
                             <div class="timeline-header">

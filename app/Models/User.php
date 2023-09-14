@@ -9,6 +9,8 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Spatie\Permission\Traits\HasRoles;
 use App\Models\Client;
+use App\Models\Company;
+
 
 
 class User extends Authenticatable
@@ -48,5 +50,10 @@ class User extends Authenticatable
     public function user_client()
     {
         return $this->hasMany(Client::class, 'user_id', 'id');
+    }
+
+    public function company()
+    {
+        return $this->hasOne(Company::class, 'user_id', 'id');
     }
 }

@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
-
+use App\Models\Company;
 class Country extends Model
 {
     use HasFactory;
@@ -35,5 +35,9 @@ class Country extends Model
         
     }
 
+    public function company()
+    {
+        return $this->hasMany(Company::class, 'country_id', 'id'); 
+    }
    
 }

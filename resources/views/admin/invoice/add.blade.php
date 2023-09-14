@@ -13,46 +13,16 @@
                       <div class="row m-sm-4 m-0">
                         <div class="col-md-7 mb-md-0 mb-4 ps-0">
                           <div class="d-flex svg-illustration mb-4 gap-2 align-items-center">
-                            <svg
-                              width="32"
-                              height="22"
-                              viewBox="0 0 32 22"
-                              fill="none"
-                              xmlns="http://www.w3.org/2000/svg"
-                            >
-                              <path
-                                fill-rule="evenodd"
-                                clip-rule="evenodd"
-                                d="M0.00172773 0V6.85398C0.00172773 6.85398 -0.133178 9.01207 1.98092 10.8388L13.6912 21.9964L19.7809 21.9181L18.8042 9.88248L16.4951 7.17289L9.23799 0H0.00172773Z"
-                                fill="#7367F0"
-                              />
-                              <path
-                                opacity="0.06"
-                                fill-rule="evenodd"
-                                clip-rule="evenodd"
-                                d="M7.69824 16.4364L12.5199 3.23696L16.5541 7.25596L7.69824 16.4364Z"
-                                fill="#161616"
-                              />
-                              <path
-                                opacity="0.06"
-                                fill-rule="evenodd"
-                                clip-rule="evenodd"
-                                d="M8.07751 15.9175L13.9419 4.63989L16.5849 7.28475L8.07751 15.9175Z"
-                                fill="#161616"
-                              />
-                              <path
-                                fill-rule="evenodd"
-                                clip-rule="evenodd"
-                                d="M7.77295 16.3566L23.6563 0H32V6.88383C32 6.88383 31.8262 9.17836 30.6591 10.4057L19.7824 22H13.6938L7.77295 16.3566Z"
-                                fill="#7367F0"
-                              />
-                            </svg>
-
-                            <span class="app-brand-text fw-bold fs-4"> Vuexy </span>
+                            @if($company->logo)
+                            <img src="{{$company->logo}}" alt="Company logo" width="70">
+                            @else
+                            <img src="{{ asset('assets/img/illustrations/icon-login-hejdabilling.png') }}" alt="logo" width="50">
+                            @endif
+                            <span class="app-brand-text fw-bold fs-4"> {{$company->name}} </span>
                           </div>
-                          <p class="mb-2">Office 149, 450 South Brand Brooklyn</p>
-                          <p class="mb-2">San Diego County, CA 91905, USA</p>
-                          <p class="mb-3">+1 (123) 456 7891, +44 (876) 543 2198</p>
+                          <p class="mb-2">{{$company->address}}</p>
+                          <p class="mb-2">{{$company->country->name}}</p>
+                          <p class="mb-3">{{$company->phone}}</p>
                         </div>
                         <div class="col-md-5">
                           <dl class="row mb-2">
@@ -102,49 +72,45 @@
                         <div class="col-md-6 col-sm-7">
                           <h6 class="mb-4">Bill To:</h6>
                           <table>
-                            <tbody>
-                              <tr>
-                                <td class="pe-4">Total Due:</td>
-                                <td><strong>$12,110.55</strong></td>
-                              </tr>
-                              <tr>
-                                <td class="pe-4">Bank name:</td>
-                                <td>American Bank</td>
-                              </tr>
-                              <tr>
-                                <td class="pe-4">Country:</td>
-                                <td>United States</td>
-                              </tr>
-                              <tr>
-                                <td class="pe-4">IBAN:</td>
-                                <td>ETD95476213874685</td>
-                              </tr>
-                              <tr>
-                                <td class="pe-4">SWIFT code:</td>
-                                <td>BR91905</td>
-                              </tr>
-                            </tbody>
+                            @foreach($company->payment_method as $payment)
+                              <tbody>
+                                <tr>
+                                  <td class="pe-4">Total Due:</td>
+                                  <td><strong id="todaldue">00.00</strong></td>
+                                </tr>
+                                <tr>
+                                  <td class="pe-4">Bank name:</td>
+                                  <td>{{$payment->name_bank}}</td>
+                                </tr>
+                                <tr>
+                                  <td class="pe-4">Country:</td>
+                                  <td>{{$company->country->name}}</td>
+                                </tr>
+                                <tr>
+                                  <td class="pe-4">IBAN:</td>
+                                  <td>{{$payment->iban}}</td>
+                                </tr>
+                                <tr>
+                                  <td class="pe-4">SWIFT code:</td>
+                                  <td>{{$payment->swish}}</td>
+                                </tr>
+                              </tbody>
+                            @endforeach
                           </table>
                         </div>
                       </div>
 
                       <hr class="my-3 mx-n4" />
-
-                      <form class="source-item pt-4 px-0 px-sm-4">
+                      
+                      <form class="source-item pt-4 px-0 px-sm-4" id="myform" action="{{ route('invoice.generate', $client->id) }}" method="POST">
                         <div class="mb-3" data-repeater-list="group-a">
                           <div class="repeater-wrapper pt-0 pt-md-4" data-repeater-item>
                             <div class="d-flex border rounded position-relative pe-0">
                               <div class="row w-100 p-3">
                                 <div class="col-md-6 col-12 mb-md-0 mb-3">
                                   <p class="mb-2 repeater-title">Item</p>
-                                  <select class="form-select item-details mb-3">
-                                    <option selected disabled>Select Item</option>
-                                    <option value="App Design">App Design</option>
-                                    <option value="App Customization">App Customization</option>
-                                    <option value="ABC Template">ABC Template</option>
-                                    <option value="App Development">App Development</option>
-                                  </select>
-                                  <textarea class="form-control" rows="2" placeholder="Item Information"></textarea>
+                                  <input type="text" class="form-control" name="item-details" placeholder="Item details"/>
+                                  <!--<textarea class="form-control" rows="2" placeholder="Item Information"></textarea>-->
                                 </div>
                                 <div class="col-md-3 col-12 mb-md-0 mb-3">
                                   <p class="mb-2 repeater-title">Cost</p>
@@ -153,8 +119,9 @@
                                     class="form-control invoice-item-price mb-3"
                                     placeholder="00"
                                     min="12"
+                                    name="cost"
                                   />
-                                  <div>
+                                  <!--<div>
                                     <span>Discount:</span>
                                     <span class="discount me-2">0%</span>
                                     <span
@@ -167,7 +134,7 @@
                                     <span class="tax-2" data-bs-toggle="tooltip" data-bs-placement="top" title="Tax 2"
                                       >0%</span
                                     >
-                                  </div>
+                                  </div>-->
                                 </div>
                                 <div class="col-md-2 col-12 mb-md-0 mb-3">
                                   <p class="mb-2 repeater-title">Qty</p>
@@ -177,11 +144,12 @@
                                     placeholder="1"
                                     min="1"
                                     max="50"
+                                    name="qty"
                                   />
                                 </div>
                                 <div class="col-md-1 col-12 pe-0">
                                   <p class="mb-2 repeater-title">Price</p>
-                                  <p class="mb-0">$24.00</p>
+                                  <p class="mb-0" name="price" id="price[]"></p>
                                 </div>
                               </div>
                               <div
@@ -244,10 +212,10 @@
                         </div>
                         <div class="row pb-4">
                           <div class="col-12">
-                            <button type="button" class="btn btn-primary" data-repeater-create>Add Item</button>
+                            <button type="button" onclick="add_item()" class="btn btn-primary" data-repeater-create>Add Item</button>
                           </div>
                         </div>
-                      </form>
+                      <!--</form>-->
 
                       <hr class="my-3 mx-n4" />
 
@@ -273,20 +241,20 @@
                           <div class="invoice-calculations">
                             <div class="d-flex justify-content-between mb-2">
                               <span class="w-px-100">Subtotal:</span>
-                              <span class="fw-semibold">$00.00</span>
+                              <span class="fw-semibold" id="subtotal">00.00</span>
                             </div>
                             <div class="d-flex justify-content-between mb-2">
                               <span class="w-px-100">Discount:</span>
-                              <span class="fw-semibold">$00.00</span>
+                              <span class="fw-semibold">00.00</span>
                             </div>
                             <div class="d-flex justify-content-between mb-2">
                               <span class="w-px-100">Tax:</span>
-                              <span class="fw-semibold">$00.00</span>
+                              <span class="fw-semibold">00.00</span>
                             </div>
                             <hr />
                             <div class="d-flex justify-content-between">
                               <span class="w-px-100">Total:</span>
-                              <span class="fw-semibold">$00.00</span>
+                              <span class="fw-semibold" id="total">00.00</span>
                             </div>
                           </div>
                         </div>
@@ -305,21 +273,23 @@
                     </div>
                   </div>
                 </div>
+
+                
                 <!-- /Invoice Add-->
 
                 <!-- Invoice Actions -->
-                <div class="col-lg-3 col-12 invoice-actions">
+                <div class="col-lg-3 col-12">
                   <div class="card mb-4">
                     <div class="card-body">
+                      @csrf
                       <button
+                        type="button"
                         class="btn btn-primary d-grid w-100 mb-2"
-                        data-bs-toggle="offcanvas"
-                        data-bs-target="#sendInvoiceOffcanvas"
+                        onclick="submit_remove()"
                       >
-                        <span class="d-flex align-items-center justify-content-center text-nowrap"
-                          ><i class="ti ti-send ti-xs me-1"></i>Send Invoice</span
-                        >
+                        Send Invoice
                       </button>
+                </form>
                       <a href="./app-invoice-preview.html" class="btn btn-label-secondary d-grid w-100 mb-2">Preview</a>
                       <button type="button" class="btn btn-label-secondary d-grid w-100">Save</button>
                     </div>
@@ -332,7 +302,7 @@
                       <option value="Card">Credit/Debit Card</option>
                       <option value="UPI Transfer">UPI Transfer</option>
                     </select>
-                    <div class="d-flex justify-content-between mb-2">
+                    <!--<div class="d-flex justify-content-between mb-2">
                       <label for="payment-terms" class="mb-0">Payment Terms</label>
                       <label class="switch switch-primary me-0">
                         <input type="checkbox" class="switch-input" id="payment-terms" checked />
@@ -353,8 +323,8 @@
                         </span>
                         <span class="switch-label"></span>
                       </label>
-                    </div>
-                    <div class="d-flex justify-content-between">
+                    </div>-->
+                   <!-- <div class="d-flex justify-content-between">
                       <label for="payment-stub" class="mb-0">Payment Stub</label>
                       <label class="switch switch-primary me-0">
                         <input type="checkbox" class="switch-input" id="payment-stub" />
@@ -366,7 +336,7 @@
                       </label>
                     </div>
                   </div>
-                </div>
+                </div>-->
                 <!-- /Invoice Actions -->
               </div>
 
@@ -441,5 +411,67 @@
               <!-- /Offcanvas -->
             </div>
             <!-- / Content -->
+
+<script>
+
+function add_item()
+{
+  var valores = {};
+
+        // Seleccionar los elementos cuyo atributo name comienza con "miCampo[".
+        $('input[name^="group-a["]').each(function () {
+            var name = $(this).attr("name");
+            var matches = name.match(/\[(\d+)\]\[([^\]]+)\]/);
+            var indice = parseInt(matches[1]);
+            var propiedad = matches[2];
+
+            if (!valores[indice]) {
+                valores[indice] = {};
+            }
+
+            valores[indice][propiedad] = $(this).val();
+            
+        });
+
+        // Haz algo con los valores, como mostrarlos en la consola.
+        console.log("Valores de los campos de entrada:");
+        console.log(valores);
+
+        var subtotal =0;
+        Object.keys(valores).forEach(function(key) {
+            console.log(key + ": " + valores[key].cost);
+            console.log(key + ": " + valores[key].qty);
+            var price = valores[key].cost * valores[key].qty;
+            console.log(price);
+            
+            $('p[id="price[]"]').eq(key).text(price);
+            
+            subtotal += price; 
+            $("#subtotal").text(subtotal);
+            $("#total").text(subtotal);
+            $("#todaldue").text(subtotal);
+        });
+
+        
+ 
+}
+
+function submit_remove()
+{
+  console.log("ingrese aquí");
+// Remueve la clase del elemento.
+$("#myform").removeClass("source-item");
+
+// Envía el formulario.
+$("#myform").submit();
+
+
+
+
+}
+
+
+
+</script>
 
 @endsection
