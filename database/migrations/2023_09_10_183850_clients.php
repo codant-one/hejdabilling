@@ -16,16 +16,19 @@ class Clients extends Migration
         Schema::create('clients', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('user_id');
-            $table->string('name');
-            $table->string('lastname');
+            $table->unsignedBigInteger('type_client_id');
+            $table->string('name')->nullable();
+            $table->string('lastname')->nullable();
             $table->string('email');
             $table->string('name_company')->nullable();
-            $table->string('address')->nullable();
-            $table->string('phone')->nullable();
+            $table->string('org_num')->nullable();
+            $table->string('address');
+            $table->string('phone');
             $table->timestamp('email_verified_at')->nullable();
             $table->rememberToken();
             $table->timestamps();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('type_client_id')->references('id')->on('type_clients')->onDelete('cascade');
         });
     }
 

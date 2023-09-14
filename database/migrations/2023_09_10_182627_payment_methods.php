@@ -21,10 +21,6 @@ class PaymentMethods extends Migration
             $table->string('account_number');
             $table->string('iban')->nullable();
             $table->string('swish')->nullable();
-            $table->string('address')->nullable();
-            $table->string('phone')->nullable();
-            $table->string('logo')->nullable();
-            $table->string('color')->nullable();
             $table->rememberToken();
             $table->timestamps();
             $table->foreign('company_id')->references('id')->on('companies')->onDelete('cascade');

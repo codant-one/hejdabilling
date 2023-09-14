@@ -21,8 +21,8 @@ class Companies extends Migration
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('country_id');
             $table->string('name');
-            $table->string('org_number');
-            $table->string('email')->unique();
+            $table->string('org_number')->unique();
+            $table->string('email');
             $table->string('address')->nullable();
             $table->string('phone')->nullable();
             $table->string('logo')->nullable();

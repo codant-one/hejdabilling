@@ -74,12 +74,12 @@
                               value="{{auth()->user()->name}}"
                               placeholder="Name"
                               autofocus
-                              require
+                              required
                             />
                           </div>
                           <div class="mb-3 col-md-6">
                             <label for="lastName" class="form-label">Last Name</label>
-                            <input class="form-control" type="text" name="lastname" id="lastName" value="{{auth()->user()->lastname}}" placeholder="Lastname" require/>
+                            <input class="form-control" type="text" name="lastname" id="lastName" value="{{auth()->user()->lastname}}" placeholder="Lastname" required/>
                           </div>
                           <div class="mb-3 col-md-6">
                             <label for="email" class="form-label">E-mail</label>
@@ -130,7 +130,7 @@
                               name="company"
                               value="{{$user['company']['name'] ?? null}}"
                               placeholder="Company Name"
-                              require
+                              required
                             />
                           </div>
 
@@ -143,18 +143,19 @@
                                 class="form-control"
                                 value="{{$user['company']['org_number'] ?? null}}"
                                 placeholder="Org Number"
+                                required
                               />
                             
                           </div>
 
                           <div class="mb-3 col-md-6">
                             <label  class="form-label">E-mail Company</label>
-                            <input type="email" class="form-control"  name="email_company" value="{{$user['company']['email'] ?? null}}" placeholder="E-mail Company" />
+                            <input type="email" class="form-control"  name="email_company" value="{{$user['company']['email'] ?? null}}" placeholder="E-mail Company" required/>
                           </div>
 
                           <div class="mb-3 col-md-6">
                             <label for="address" class="form-label">Address</label>
-                            <input type="text" class="form-control" id="address" name="address" value="{{$user['company']['address'] ?? null}}" placeholder="Address Company" />
+                            <input type="text" class="form-control" id="address" name="address" value="{{$user['company']['address'] ?? null}}" placeholder="Address Company" required/>
                           </div>
 
                           <div class="mb-3 col-md-6">
@@ -168,6 +169,7 @@
                                 class="form-control  phone-mask"
                                 value="{{$user['company']['phone'] ?? null}}"
                                 placeholder="Phone Company"
+                                required
                               />
                             </div>
                           </div>
@@ -182,12 +184,12 @@
                           
                           <div class="mb-3 col-md-6">
                             <label class="form-label">Bank Name</label>
-                            <input type="text" class="form-control"  name="name_bank" value="{{$user['company']['payment_method']['name_bank'] ?? null}}" placeholder="Bank Name" />
+                            <input type="text" class="form-control"  name="name_bank" value="{{$user['company']['payment_method']['name_bank'] ?? null}}" placeholder="Bank Name" required/>
                           </div>
 
                           <div class="mb-3 col-md-6">
                             <label  class="form-label">Account Number</label>
-                            <input  type="text" class="form-control"  name="account_number" value="{{$user['company']['payment_method']['account_number'] ?? null}}" placeholder="Account Number" />
+                            <input  type="text" class="form-control"  name="account_number" value="{{$user['company']['payment_method']['account_number'] ?? null}}" placeholder="Account Number" required/>
                           </div>
 
                           <div class="mb-3 col-md-6">

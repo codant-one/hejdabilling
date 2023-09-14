@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 use App\Models\Company;
+use App\Models\Currency;
+
 class Country extends Model
 {
     use HasFactory;
@@ -38,6 +40,13 @@ class Country extends Model
     public function company()
     {
         return $this->hasMany(Company::class, 'country_id', 'id'); 
+    }
+
+    public function currency()
+    
+    {
+        return $this->hasMany(Currency::class, 'country_id', 'id'); 
+
     }
    
 }

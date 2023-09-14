@@ -38,11 +38,11 @@
                             <h4>{{auth()->user()->nick}}</h4>
                             <ul
                               class="list-inline mb-0 d-flex align-items-center flex-wrap justify-content-sm-start justify-content-center gap-2"
-                            >
+                            >@if($companies)
                               <li class="list-inline-item"><i class="ti ti-color-swatch"></i> {{$companies->name}}</li>
                               <li class="list-inline-item"><i class="ti ti-map-pin"></i> {{$companies->country->name}}</li>
                               <li class="list-inline-item"><i class="ti ti-calendar"></i> Joined {{auth()->user()->created_at->format('d F Y')}}</li>
-                            </ul>
+                            @endif</ul>
                           </div>
                           <a href="{{route('admin.profile.edit')}}" class="btn btn-primary">
                           <i class="fa-solid fa-pen-to-square"></i>&nbsp;&nbsp;&nbsp;Edit
@@ -105,7 +105,7 @@
                       </ul>
                       <small class="card-text text-uppercase">Company</small>
                       <ul class="list-unstyled mb-4 mt-3">
-
+                        @if($companies)
                         <li class="d-flex align-items-center mb-3">
                           <i class="ti ti-brand-skype"></i><span class="fw-bold mx-2">Name:</span>
                           <span>{{$companies->name}}</span>
@@ -121,7 +121,7 @@
                           <i class="ti ti-map-pin"></i><span class="fw-bold mx-2">Address:</span>
                           <span>{{$companies->address}}</span>
                         </li>
-                        
+                        @endif
                       </ul>
                       <!--
                       <small class="card-text text-uppercase">Teams</small>
@@ -194,6 +194,7 @@
                           <span class="timeline-point timeline-point-primary"></span>
                           <div class="timeline-event">
                             <div class="timeline-header">
+                            @if($companies)
                               <h6 class="mb-0">{{$companies->name}}</h6>
                               
                             </div> <br>
@@ -206,7 +207,7 @@
                                 <h6 class="mb-0">{{auth()->user()->nick}}</h6>
                                 <span>{{$companies->address}} </span>
                               </div>
-                            </div>
+                            </div>@endif
                           </div>
                         </li>
                         <li class="timeline-item timeline-item-transparent">
@@ -216,12 +217,14 @@
                               <h6 class="mb-0">Payment Accounts</h6> <br> 
                             </div>
                             <p class="mb-0">
+                            @if($companies)
                               @foreach($companies->payment_method as $payment)
                                 Bank: {{$payment->name_bank}} <br>
                                 Account: {{$payment->account_number}} <br>
                                 IBAN: {{$payment->iban}} <br>
                                 SWISH: {{$payment->swish}}<br>
                               @endforeach
+                            @endif
                             </p>
                           </div>
                         </li>
@@ -233,7 +236,9 @@
                               
                             </div>
                             <p class="mb-2">
+                            @if($cant_customer)
                               Number of customers: {{$cant_customer}}
+                            @endif
                             </p>
                            
                           </div>

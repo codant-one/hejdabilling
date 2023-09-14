@@ -9,6 +9,7 @@ use App\Models\Company;
 use App\Models\Client;
 use Carbon\Carbon;
 use Validator;
+use Illuminate\Validation\Rule;
 use PDF;
 
 class InvoiceController extends Controller
@@ -31,35 +32,48 @@ class InvoiceController extends Controller
 
     public function add_client(Request $request)
     {
-        $rules = ['email'   => 'unique:clients'];
+        $user = User::with(['user_client'])->find(auth()->user()->id);
+        
+        if(isset($user->user_client))
 
-        $customErrorMessages = ['email.unique' => 'A customer with this email has already been registered.'];
+        {   
+            //dd($user->user_client);
+            foreach ($user->user_client as $client) 
+            {
+                if($client->email === $request->email)
+                {
+                    
+                    return redirect()->route('invoice.client')->with('jsAlerterror','A customer with the email or Org Number has already been added previously.');
+                }
 
-        $validator = Validator::make($request->all(), $rules, $customErrorMessages);
+                elseif($request->org_num!==null && $client->org_num === $request->org_num)
+                {
+                    return redirect()->route('invoice.client')->with('jsAlerterror','A customer with the email or Org Number has already been added previously.'); 
+                }
 
-        $message = ""; 
-        if ($validator->fails()) {
-            
-            $errors = [];
-
-            foreach($validator->errors()->toArray() as $error){
-                $message = $error[0];
-                return redirect()->route('invoice.client')->with('jsAlerterror', $message);
+                
+                
             }
         }
+                    $clients = new Client();
+                    $clients->user_id = $user->id;
+                    $clients->type_client_id = $request->customRadioTemp;
+                    $clients->name = $request->name;
+                    $clients->lastname = $request->lastname;
+                    $clients->email = $request->email;
+                    $clients->name_company = $request->name_company;
+                    $clients->org_num = $request->org_num;
+                    $clients->address = $request->address;
+                    $clients->phone = $request->phone;
+                    $clients->save();
+                    
+                    return redirect()->route('invoice.client')->with('jsAlert', "Customer successfully registered.");
 
-        $client = new Client();
-        $user = auth()->user();
-        $client->user_id = $user->id;
-        $client->name = $request->name;
-        $client->lastname = $request->lastname;
-        $client->email = $request->email;
-        $client->name_company = $request->name_company;
-        $client->address = $request->address;
-        $client->phone = $request->phone;
-        $client->save();
         
-        return redirect()->route('invoice.client')->with('jsAlert', "Customer successfully registered.");
+
+
+        
+        
    
 
     }

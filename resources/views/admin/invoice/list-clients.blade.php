@@ -101,8 +101,8 @@
                       <tr>
                         <th></th>
                         <th>Name</th>
+                        <th>Org Num</th>
                         <th>Email</th>
-                        <th>Company</th>
                         <th>Address</th>
                         <th>Phone</th>
                         <th>Actions</th>
@@ -110,10 +110,14 @@
                       <tbody class="table">
                             @foreach($clients as $client)
                                 <tr> 
-                                    <td></td>                        
-                                    <td>{{ $client->name }}</td>
-                                    <td>{{ $client->email }}</td>
+                                    <td></td>  
+                                    @if($client->org_num)                   
                                     <td>{{ $client->name_company }}</td>
+                                    @else
+                                    <td>{{$client->name}} {{$client->lastname}}</td>
+                                    @endif
+                                    <td>{{$client->org_num}}</td>
+                                    <td>{{ $client->email }}</td>
                                     <td>{{ $client->address }}</td>
                                     <td>{{ $client->phone }}</td>
                                     <td>
@@ -143,28 +147,100 @@
                   </div>
                   <div class="offcanvas-body mx-0 flex-grow-0 pt-0 h-100">
                     <form action ="{{route('invoice.add.client')}}" method="POST" class="pt-0" >
-                      <div class="mb-3">
-                        <label class="form-label" for="add-user-fullname">Name</label>
+                      <!-- selector tipo de usuario-->
+
+                      <div class="row">
+                        <div class="col-md mb-md-0 mb-2">
+                          <div class="form-check custom-option custom-option-basic">
+                            <label class="form-check-label custom-option-content" for="customRadioTemp1">
+                              <input
+                                name="customRadioTemp"
+                                class="form-check-input"
+                                type="radio"
+                                value="1"
+                                id="optionone"
+                                checked
+                              />
+                              <span class="custom-option-header">
+                                <span class="h6 mb-0">Independent</span>
+                                
+                              </span>
+                              <span class="custom-option-body">
+                                <small>independent worker.</small>
+                              </span>
+                            </label>
+                          </div>
+                        </div>
+                        <div class="col-md">
+                          <div class="form-check custom-option custom-option-basic">
+                            <label class="form-check-label custom-option-content" for="customRadioTemp2">
+                              <input
+                                name="customRadioTemp"
+                                class="form-check-input"
+                                type="radio"
+                                value="2"
+                                id="optiontwo"
+                              />
+                              <span class="custom-option-header">
+                                <span class="h6 mb-0">Company</span>
+                                
+                              </span>
+                              <span class="custom-option-body">
+                                <small>company, legal entity.</small>
+                              </span>
+                            </label>
+                          </div>
+                        </div>
+                      </div>
+
+                      <!--fin selector-->
+                      <div class="mb-3 independent">
+                        <label class="form-label " for="add-user-fullname">Name</label>
                         <input
                           type="text"
-                          class="form-control"
+                          class="form-control input-ind"
                           id="add-user-fullname"
                           placeholder="Name"
                           name="name"
                           aria-label="Name"
-                          require
+                          required
                         />
                       </div>
-                      <div class="mb-3">
+                      <div class="mb-3 independent">
                         <label class="form-label" for="add-user-fullname">Last Name</label>
                         <input
                           type="text"
-                          class="form-control"
+                          class="form-control input-ind"
                           id="add-user-fullname"
                           placeholder="Last Name"
                           name="lastname"
                           aria-label="Last Name"
-                          require
+                          required
+                        />
+                      </div>
+
+                      <div class="mb-3  typecompany" style="display: none;">
+                        <label class="form-label" for="add-user-company">Company Name</label>
+                        <input
+                          type="text"
+                          id="add-user-company"
+                          class="form-control input-company"
+                          placeholder="Company"
+                          aria-label="Company"
+                          name="name_company"
+                          
+                        />
+                      </div>
+                      <div class="mb-3 typecompany" style="display: none;">
+                        <label class="form-label" for="add-user-company">Org Number</label>
+                        <input
+                          type="text"
+                          id="add-user-company"
+                          class="form-control input-company"
+                          placeholder="Company"
+                          aria-label="Company"
+                          name="org_num"
+                          
                         />
                       </div>
                       <div class="mb-3">
@@ -176,34 +252,24 @@
                           placeholder="E-mail"
                           aria-label="E-mail"
                           name="email"
-                          require
+                          required
                         />
                       </div>
+                      
                       <div class="mb-3">
-                        <label class="form-label" for="add-user-company">Company</label>
-                        <input
-                          type="text"
-                          id="add-user-company"
-                          class="form-control"
-                          placeholder="Company"
-                          aria-label="Company"
-                          name="name_company"
-                          
-                        />
-                      </div>
-                      <div class="mb-3">
-                        <label class="form-label" for="add-user-contact">Company Address</label>
+                        <label class="form-label" for="add-user-contact">Address</label>
                         <input
                           type="text"
                           id="add-user-contact"
                           class="form-control"
-                          placeholder="Company Address"
+                          placeholder="Address"
                           aria-label="Address"
                           name="address"
+                          required
                         />
                       </div>
                       <div class="mb-3">
-                        <label class="form-label" for="add-user-contact">Company Phone</label>
+                        <label class="form-label" for="add-user-contact">Phone</label>
                         <input
                           type="text"
                           id="add-user-contact"
@@ -211,6 +277,7 @@
                           placeholder="Company Phone"
                           aria-label="phone"
                           name="phone"
+                          required
                         />
                       </div>
                       @csrf
@@ -224,5 +291,27 @@
             <!-- / Content -->
 
 
+<script>
+  
+$('#optionone').change(function() {
+    if ($('#optionone').is(":checked")) {
+      $('.independent').show();
+      $('.typecompany').hide();
+      $('.input-ind').attr("required", "required");
+      $('.input-company').removeAttr("required", "required");
+    }
+  });
 
+  $('#optiontwo').change(function() {
+    if ($('#optiontwo').is(":checked")) {
+      $('.independent').hide();
+      $('.typecompany').show();
+      $('.input-ind').removeAttr("required", "required");
+      $('.input-company').attr("required", "required");
+    }
+  });
+  
+
+
+</script>  
 @endsection
