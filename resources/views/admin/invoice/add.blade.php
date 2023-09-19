@@ -29,6 +29,7 @@
                             <dt class="col-sm-6 mb-2 mb-sm-0 text-md-end ps-0">
                               <span class="h4 text-capitalize mb-0 text-nowrap">Invoice</span>
                             </dt>
+                          
                             <dd class="col-sm-6 d-flex justify-content-md-end pe-0 ps-0 ps-sm-2">
                               <div class="input-group input-group-merge disabled w-px-150">
                                 <span class="input-group-text">#</span>
@@ -42,17 +43,22 @@
                                 />
                               </div>
                             </dd>
+                          
                             <dt class="col-sm-6 mb-2 mb-sm-0 text-md-end ps-0">
                               <span class="fw-normal">Date:</span>
                             </dt>
                             <dd class="col-sm-6 d-flex justify-content-md-end pe-0 ps-0 ps-sm-2">
-                              <input type="text" class="form-control w-px-150 date-picker" placeholder="YYYY-MM-DD" />
+                              <input type="text" name="date_a" id="date_a" class="form-control w-px-150 date-picker" placeholder="YYYY-MM-DD" value="{{ date('Y-m-d') }}"/>
                             </dd>
                             <dt class="col-sm-6 mb-2 mb-sm-0 text-md-end ps-0">
                               <span class="fw-normal">Due Date:</span>
                             </dt>
+                            @php
+                                $fechaActual = date('Y-m-d');
+                                $fechaSumada = date('Y-m-d', strtotime($fechaActual . ' +2 weeks'));
+                            @endphp
                             <dd class="col-sm-6 d-flex justify-content-md-end pe-0 ps-0 ps-sm-2">
-                              <input type="text" class="form-control w-px-150 date-picker" placeholder="YYYY-MM-DD" />
+                              <input type="text" name="due_date" id="due_date" class="form-control w-px-150 date-picker" placeholder="YYYY-MM-DD" value="{{$fechaSumada}}" />
                             </dd>
                           </dl>
                         </div>
@@ -102,15 +108,16 @@
 
                       <hr class="my-3 mx-n4" />
                       
-                      <form class="source-item pt-4 px-0 px-sm-4" id="myform" action="{{ route('invoice.generate', $client->id) }}" method="POST">
-                        <div class="mb-3" data-repeater-list="group-a">
-                          <div class="repeater-wrapper pt-0 pt-md-4" data-repeater-item>
+                      <form class="pt-4 px-0 px-sm-4" id="formularioFactura" action="{{route('invoice.generate',$client->id)}}" method="POST">
+                        <div class="mb-3">
+                          <div class="repeater-wrapper pt-0 pt-md-4 item">
                             <div class="d-flex border rounded position-relative pe-0">
                               <div class="row w-100 p-3">
                                 <div class="col-md-6 col-12 mb-md-0 mb-3">
                                   <p class="mb-2 repeater-title">Item</p>
-                                  <input type="text" class="form-control" name="item-details" placeholder="Item details"/>
+                                  <input type="text" class="form-control" name="item-details[]" placeholder="Item details"/>
                                   <!--<textarea class="form-control" rows="2" placeholder="Item Information"></textarea>-->
+        
                                 </div>
                                 <div class="col-md-3 col-12 mb-md-0 mb-3">
                                   <p class="mb-2 repeater-title">Cost</p>
@@ -119,7 +126,7 @@
                                     class="form-control invoice-item-price mb-3"
                                     placeholder="00"
                                     min="12"
-                                    name="cost"
+                                    name="cost[]"
                                   />
                                   <!--<div>
                                     <span>Discount:</span>
@@ -144,7 +151,7 @@
                                     placeholder="1"
                                     min="1"
                                     max="50"
-                                    name="qty"
+                                    name="qty[]"
                                   />
                                 </div>
                                 <div class="col-md-1 col-12 pe-0">
@@ -212,10 +219,10 @@
                         </div>
                         <div class="row pb-4">
                           <div class="col-12">
-                            <button type="button" onclick="add_item()" class="btn btn-primary" data-repeater-create>Add Item</button>
+                            <button type="button" onclick="add_item()" class="btn btn-primary">Add Item</button>
                           </div>
                         </div>
-                      <!--</form>-->
+                   
 
                       <hr class="my-3 mx-n4" />
 
@@ -281,132 +288,31 @@
                 <div class="col-lg-3 col-12">
                   <div class="card mb-4">
                     <div class="card-body">
+                      <p class="mb-2">Select Currency</p>
+                      <select  class="form-select mb-4" name="typecurrency"  id="typecurrency">
+                        @foreach($currencies as $currency)
+                        <option value="{{$currency->id}}">{{$currency->code}}</option>
+                        @endforeach
+                      </select>
+                      <input type="hidden" name="date_hidden" id="date_hidden" value="{{ date('Y-m-d') }}" />
+                      <input type="hidden" name="duedate_hidden" id="duedate_hidden" value="{{$fechaSumada}}" />
                       @csrf
                       <button
-                        type="button"
+                        type="submit"
                         class="btn btn-primary d-grid w-100 mb-2"
-                        onclick="submit_remove()"
                       >
                         Send Invoice
                       </button>
-                </form>
+             
                       <a href="./app-invoice-preview.html" class="btn btn-label-secondary d-grid w-100 mb-2">Preview</a>
                       <button type="button" class="btn btn-label-secondary d-grid w-100">Save</button>
                     </div>
                   </div>
                   <div>
-                    <p class="mb-2">Accept payments via</p>
-                    <select class="form-select mb-4">
-                      <option value="Bank Account">Bank Account</option>
-                      <option value="Paypal">Paypal</option>
-                      <option value="Card">Credit/Debit Card</option>
-                      <option value="UPI Transfer">UPI Transfer</option>
-                    </select>
-                    <!--<div class="d-flex justify-content-between mb-2">
-                      <label for="payment-terms" class="mb-0">Payment Terms</label>
-                      <label class="switch switch-primary me-0">
-                        <input type="checkbox" class="switch-input" id="payment-terms" checked />
-                        <span class="switch-toggle-slider">
-                          <span class="switch-on"></span>
-                          <span class="switch-off"></span>
-                        </span>
-                        <span class="switch-label"></span>
-                      </label>
-                    </div>
-                    <div class="d-flex justify-content-between mb-2">
-                      <label for="client-notes" class="mb-0">Client Notes</label>
-                      <label class="switch switch-primary me-0">
-                        <input type="checkbox" class="switch-input" id="client-notes" />
-                        <span class="switch-toggle-slider">
-                          <span class="switch-on"></span>
-                          <span class="switch-off"></span>
-                        </span>
-                        <span class="switch-label"></span>
-                      </label>
-                    </div>-->
-                   <!-- <div class="d-flex justify-content-between">
-                      <label for="payment-stub" class="mb-0">Payment Stub</label>
-                      <label class="switch switch-primary me-0">
-                        <input type="checkbox" class="switch-input" id="payment-stub" />
-                        <span class="switch-toggle-slider">
-                          <span class="switch-on"></span>
-                          <span class="switch-off"></span>
-                        </span>
-                        <span class="switch-label"></span>
-                      </label>
-                    </div>
-                  </div>
-                </div>-->
-                <!-- /Invoice Actions -->
+              </form>   
               </div>
 
               <!-- Offcanvas -->
-              <!-- Send Invoice Sidebar -->
-              <div class="offcanvas offcanvas-end" id="sendInvoiceOffcanvas" aria-hidden="true">
-                <div class="offcanvas-header my-1">
-                  <h5 class="offcanvas-title">Send Invoice</h5>
-                  <button
-                    type="button"
-                    class="btn-close text-reset"
-                    data-bs-dismiss="offcanvas"
-                    aria-label="Close"
-                  ></button>
-                </div>
-                <div class="offcanvas-body pt-0 flex-grow-1">
-                  <form>
-                    <div class="mb-3">
-                      <label for="invoice-from" class="form-label">From</label>
-                      <input
-                        type="text"
-                        class="form-control"
-                        id="invoice-from"
-                        value="shelbyComapny@email.com"
-                        placeholder="company@email.com"
-                      />
-                    </div>
-                    <div class="mb-3">
-                      <label for="invoice-to" class="form-label">To</label>
-                      <input
-                        type="text"
-                        class="form-control"
-                        id="invoice-to"
-                        value="qConsolidated@email.com"
-                        placeholder="company@email.com"
-                      />
-                    </div>
-                    <div class="mb-3">
-                      <label for="invoice-subject" class="form-label">Subject</label>
-                      <input
-                        type="text"
-                        class="form-control"
-                        id="invoice-subject"
-                        value="Invoice of purchased Admin Templates"
-                        placeholder="Invoice regarding goods"
-                      />
-                    </div>
-                    <div class="mb-3">
-                      <label for="invoice-message" class="form-label">Message</label>
-                      <textarea class="form-control" name="invoice-message" id="invoice-message" cols="3" rows="8">
-                        Dear Queen Consolidated,
-                        Thank you for your business, always a pleasure to work with you!
-                        We have generated a new invoice in the amount of $95.59
-                        We would appreciate payment of this invoice by 05/11/2021</textarea
-                      >
-                    </div>
-                    <div class="mb-4">
-                      <span class="badge bg-label-primary">
-                        <i class="ti ti-link ti-xs"></i>
-                        <span class="align-middle">Invoice Attached</span>
-                      </span>
-                    </div>
-                    <div class="mb-3 d-flex flex-wrap">
-                      <button type="button" class="btn btn-primary me-3" data-bs-dismiss="offcanvas">Send</button>
-                      <button type="button" class="btn btn-label-secondary" data-bs-dismiss="offcanvas">Cancel</button>
-                    </div>
-                  </form>
-                </div>
-              </div>
-              <!-- /Send Invoice Sidebar -->
 
               <!-- /Offcanvas -->
             </div>
@@ -416,6 +322,55 @@
 
 function add_item()
 {
+
+
+         var item = $(this).closest(".item");
+        // Clonar el grupo de campos del primer item
+        var newItem = $(".item:first").clone();
+        
+        // Limpiar los valores del nuevo item
+        newItem.find('input').val('');
+        newItem.insertAfter(item);
+        // Agregar el nuevo item clonado al formulario
+        $("#formularioFactura").append(newItem);
+
+        ///Recorrido de names
+
+        // Seleccionar todos los elementos con el atributo "name" igual a "cost[]"
+          var costInputs = $('input[name="cost[]"]');
+          var qtyInputs = $('input[name="qty[]"]');
+          var costos =[];
+          var qtys = [];
+          var subtotales = 0;
+          var iterador = 0;
+          // Iterar a través de los elementos y obtener sus valores
+          costInputs.each(function(index) {
+            costos[iterador] = $(this).val(); // Obtener el valor del input actual
+            iterador = iterador + 1;
+          });
+          iterador = 0;
+          qtyInputs.each(function(index) {
+            qtys[iterador] = $(this).val(); // Obtener el valor del input actual
+            iterador = iterador + 1;
+          });
+
+          for (let index = 0; index < costos.length; index++) 
+          {
+            var price = costos[index] * qtys[index];
+            console.log("el precio es: "+ price);
+            $('p[id="price[]"]').eq(index).text(price);
+
+            subtotales += price;
+            $("#subtotal").text(subtotales);
+            $("#total").text(subtotales);
+            $("#todaldue").text(subtotales);
+          }
+          
+
+
+
+        ///fin recorrido names
+    
   var valores = {};
 
         // Seleccionar los elementos cuyo atributo name comienza con "miCampo[".
@@ -451,24 +406,22 @@ function add_item()
             $("#total").text(subtotal);
             $("#todaldue").text(subtotal);
         });
+         
+}
 
+      //Capturamos la fecha en los inputs ocultos del formulario.
+      
+      $('#date_a').on('change', function () {
         
- 
-}
+            $('#date_hidden').val($(this).val());
+        });
 
-function submit_remove()
-{
-  console.log("ingrese aquí");
-// Remueve la clase del elemento.
-$("#myform").removeClass("source-item");
-
-// Envía el formulario.
-$("#myform").submit();
+        $('#due_date').on('change', function () {
+        
+            $('#duedate_hidden').val($(this).val());
+        });
 
 
-
-
-}
 
 
 
