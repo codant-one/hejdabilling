@@ -40,8 +40,9 @@ Route::middleware(['auth'])->group(function ()
     Route::post('/register-clients', [InvoiceController::class, 'add_client'])->name('invoice.add.client');
     Route::post('/generate-invoice/{id}', [InvoiceController::class, 'generate_invoice'])->name('invoice.generate');
     Route::get('/preview', [InvoiceController::class, 'preview'])->name('invoice.preview');
-
-
+    Route::get('/edit_client/{id}',[InvoiceController::class, 'edit_client'])->name('invoice.edit.client');
+    Route::post('/client/update/{id}',[InvoiceController::class, 'update_client'])->name('invoice.client.update');
+    Route::get('/client/invoices/{id}',[InvoiceController::class, 'invoice_client'])->name('invoice.history.client');
 
 });
 

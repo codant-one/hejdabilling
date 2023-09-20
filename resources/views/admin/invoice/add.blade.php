@@ -37,8 +37,8 @@
                                   type="text"
                                   class="form-control"
                                   disabled
-                                  placeholder="3905"
-                                  value="3905"
+                                  placeholder="cant_invoice"
+                                  value="{{$cant_invoice+1}}"
                                   id="invoiceId"
                                 />
                               </div>
@@ -301,11 +301,11 @@
                         type="submit"
                         class="btn btn-primary d-grid w-100 mb-2"
                       >
-                        Send Invoice
+                       Create invoice
                       </button>
              
-                      <a href="./app-invoice-preview.html" class="btn btn-label-secondary d-grid w-100 mb-2">Preview</a>
-                      <button type="button" class="btn btn-label-secondary d-grid w-100">Save</button>
+                      <!--<a href="./app-invoice-preview.html" class="btn btn-label-secondary d-grid w-100 mb-2">Preview</a>
+                      <button type="button" class="btn btn-label-secondary d-grid w-100">Save</button>-->
                     </div>
                   </div>
                   <div>

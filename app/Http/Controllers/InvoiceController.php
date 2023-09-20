@@ -23,7 +23,11 @@ class InvoiceController extends Controller
         $client = Client::with(['user'])->where('id',$id)->first();
         $company = Company::with(['user','payment_method', 'country'])->where('user_id',auth()->user()->id)->first();
         $currencies = Currency::all();
-        return view("admin.invoice.add", compact('client','company','currencies'));
+        $user = User::where('id',auth()->user()->id)->first(); 
+        $cant_invoice = $user->user_client->flatMap(function ($client) {
+            return $client->invoice;
+        })->count();
+        return view("admin.invoice.add", compact('client','company','currencies','cant_invoice'));
     }
     
 
@@ -31,7 +35,8 @@ class InvoiceController extends Controller
     {
         $user = auth()->user();
         $clients = Client::with(['user'])->where('user_id',$user->id)->get();
-        return view("admin.invoice.list-clients",compact('clients'));
+        $total_clients = $clients->count();
+        return view("admin.invoice.list-clients",compact('clients','total_clients'));
     }
 
     public function add_client(Request $request)
@@ -147,15 +152,59 @@ class InvoiceController extends Controller
             $item->save();
         }
 
+        $invo_items = Item::where('invoice_id',$invoice->id)->get();
+        //dd($items);
+
         //dd($prices);
-        $pdf = PDF::setOptions(['isHtml5ParserEnabled' => true, 'isRemoteEnabled' => true])->loadView('admin.invoice.pdf.invoice',compact('costos','items','qtys','prices','user','client','company','date_ini','due_date','subtotal','currency'))->setOptions(['defaultFont' => 'sans-serif'])->save(storage_path('app/public/pdfs').'/'.'prueba'.'.pdf');
-        //return view('admin.invoice.pdf.invoice', compact('costos','items','qtys','prices','user','client','company'));
-        return $pdf->download('invoice-hejdabilling.pdf');
+        //$pdf = PDF::setOptions(['isHtml5ParserEnabled' => true, 'isRemoteEnabled' => true])->loadView('admin.invoice.pdf.invoice',compact('costos','items','qtys','prices','user','client','company','date_ini','due_date','subtotal','currency'))->setOptions(['defaultFont' => 'sans-serif'])->save(storage_path('app/public/pdfs').'/'.'prueba'.'.pdf');
+        return view('admin.invoice.preview', compact('invoice','invo_items','cant_invoice','client','company','currency','prices'));
+        //return $pdf->download('invoice-hejdabilling.pdf');
     }
 
     public function preview()
     {
-        return view('admin.invoice.pdf.invoice');
+        return view('admin.invoice.preview');
+    }
+
+    public function edit_client($id)
+    {
+        $client = Client::find($id);
+
+        return view('admin.invoice.edit_client', compact('client'));
+
+    }
+
+    public function update_client(Request $request, $id)
+    {
+        $client = Client::find($id);
+
+        if($request->name === null)
+        {
+            $client->name_company = $request->name_company;
+            $client->org_num = $request->org_num;
+        }
+
+        else
+        {
+            $client->name = $request->name;
+            $client->lastname = $request->lastname;
+        }
+
+        $client->address = $request->address;
+        $client->phone = $request->phone;
+        $client->save();
+
+        return redirect()->route('invoice.client')->with('jsAlert','Client data updated successfully.');
+
+    }
+
+    public function invoice_client($id)
+    {
+        $invoices = Invoice::with(['client','item'])->where('client_id',$id)->get();
+        $client = Client::find($id);
+        $due_total = $invoices->sum('total'); 
+        $total_invoices = $invoices->count();
+        return view('admin.invoice.invoices-client',compact('invoices', 'client','due_total','total_invoices'));
     }
 
 }

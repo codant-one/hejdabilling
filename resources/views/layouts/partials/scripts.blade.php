@@ -75,7 +75,8 @@
 <script src="{{ asset('/assets/js/app-user-list.js') }}"></script>
 
 <script src="{{ asset('/assets/js/ui-navbar.js') }}"></script>
-
+<script src="{{ asset('/assets/js/offcanvas-add-payment.js') }}"></script>
+<script src="{{ asset('/assets/js/offcanvas-send-invoice.js') }}"></script>
 <!--------------------------fin public/js---------------->
 
 <!----------------- JS DASHBOARD ADMIN----------------------------->

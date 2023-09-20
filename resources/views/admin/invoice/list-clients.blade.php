@@ -11,12 +11,12 @@
                     <div class="card-body">
                       <div class="d-flex align-items-start justify-content-between">
                         <div class="content-left">
-                          <span>Session</span>
+                          <span>Clients</span>
                           <div class="d-flex align-items-center my-1">
-                            <h4 class="mb-0 me-2">21,459</h4>
-                            <span class="text-success">(+29%)</span>
+                            <h4 class="mb-0 me-2">{{$total_clients}}</h4>
+              
                           </div>
-                          <span>Total Users</span>
+                          <span>Total Clients</span>
                         </div>
                         <span class="badge bg-label-primary rounded p-2">
                           <i class="ti ti-user ti-sm"></i>
@@ -121,7 +121,10 @@
                                     <td>{{ $client->address }}</td>
                                     <td>{{ $client->phone }}</td>
                                     <td>
-                                        <a href="{{ route('invoice.create', $client->id) }}"><i class="menu-icon tf-icons ti ti-file-dollar"></i></a>
+                                      <p><a href="{{ route('invoice.create', $client->id) }}"><i class="menu-icon tf-icons ti ti-file-dollar"></i></a>
+                                        <a href="{{route('invoice.edit.client',$client->id)}}"><i class="fa-regular fa-pen-to-square fa-lg" style="color: #2e0684;"></i></a>
+                                        <a href="{{route('invoice.history.client', $client->id)}}"><i class="menu-icon tf-icons ti ti-file-description" style="color: #2e0684;"></i></a></p>
+
                                     </td>                                    
                                 </tr>
                             @endforeach
