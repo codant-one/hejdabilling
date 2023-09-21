@@ -122,12 +122,12 @@
               <ul class="menu-sub">
                 <li class="menu-item">
                   <a href="{{route('invoice.client')}}" class="menu-link">
-                    <div data-i18n="List">Clients</div>
+                    <div>Clients</div>
                   </a>
                 </li>
                 <li class="menu-item">
-                  <a href="app-invoice-preview.html" class="menu-link">
-                    <div data-i18n="Preview">Preview</div>
+                  <a href="{{route('invoice.history.user')}}" class="menu-link">
+                    <div>History</div>
                   </a>
                 </li>
                 <li class="menu-item">
@@ -164,12 +164,12 @@
               <ul class="menu-sub">
                 <li class="menu-item">
                   <a href="app-user-list.html" class="menu-link">
-                    <div data-i18n="List">List</div>
+                    <div data-i18n="List">Clients</div>
                   </a>
                 </li>
                 <li class="menu-item">
                   <a href="javascript:void(0);" class="menu-link menu-toggle">
-                    <div data-i18n="View">View</div>
+                    <div data-i18n="View">History</div>
                   </a>
                   <ul class="menu-sub">
                     <li class="menu-item">

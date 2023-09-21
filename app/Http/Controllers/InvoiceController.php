@@ -157,13 +157,17 @@ class InvoiceController extends Controller
 
         //dd($prices);
         //$pdf = PDF::setOptions(['isHtml5ParserEnabled' => true, 'isRemoteEnabled' => true])->loadView('admin.invoice.pdf.invoice',compact('costos','items','qtys','prices','user','client','company','date_ini','due_date','subtotal','currency'))->setOptions(['defaultFont' => 'sans-serif'])->save(storage_path('app/public/pdfs').'/'.'prueba'.'.pdf');
-        return view('admin.invoice.preview', compact('invoice','invo_items','cant_invoice','client','company','currency','prices'));
+        //return view('admin.invoice.preview', compact('invoice','invo_items','cant_invoice','client','company','currency','prices'));
+        return redirect()->route('invoice.preview', $invoice->id);
         //return $pdf->download('invoice-hejdabilling.pdf');
     }
 
-    public function preview()
+    public function preview($id)
     {
-        return view('admin.invoice.preview');
+        $invoices = Invoice::with(['client','item'])->where('id',$id)->first();
+        $company = Company::with(['user','payment_method', 'country'])->where('user_id',auth()->user()->id)->first();
+        $currency = Currency::find($invoices->currency_id);
+        return view('admin.invoice.preview', compact('invoices','company','currency'));
     }
 
     public function edit_client($id)
@@ -205,6 +209,28 @@ class InvoiceController extends Controller
         $due_total = $invoices->sum('total'); 
         $total_invoices = $invoices->count();
         return view('admin.invoice.invoices-client',compact('invoices', 'client','due_total','total_invoices'));
+    }
+
+    public function show_invoice($id)
+    {
+        $invoices = Invoice::with(['client','item'])->where('id',$id)->first();
+        $company = Company::with(['user','payment_method', 'country'])->where('user_id',auth()->user()->id)->first();
+        $currency = Currency::find($invoices->currency_id);
+        return view('admin.invoice.print',compact('invoices','company','currency'));
+    }
+
+    public function history_inovices()
+    {
+        $user = User::where('id',auth()->user()->id)->first();
+        $company = Company::with(['user','payment_method', 'country'])->where('user_id',$user->id)->first();
+        $invoices = $user->user_client->flatMap(function ($client) {
+            return $client->invoice;
+        });
+        $due_total = $invoices->sum('total'); 
+        $total_invoices = $invoices->count();
+        //dd($invoices);
+
+        return view('admin.invoice.history', compact('invoices','due_total','total_invoices','company'));
     }
 
 }

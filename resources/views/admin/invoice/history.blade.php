@@ -52,15 +52,11 @@
                   
                   <div class="row">
                         <div class="col-md-4">
-                            @if($client->name)
-                            <h5 class="card-title mb-3">{{$client->name}} {{$client->lastname}}</h5>
-                            @else
-                            <h5 class="card-title mb-3">{{$client->name_company}}</h5>
-                            @endif
+                            <h5 class="card-title mb-3">{{$company->name}}</h5>
                         </div>
                         <div class="col-md-4"></div>
                         <div class="col-md-4" style="text-align:end;">
-                            <button class="btn btn-secondary add-new btn-primary" onclick="window.location.href='{{route('invoice.create', $client->id)}}';"><span><i class="ti ti-plus me-0 me-sm-1 ti-xs"></i><span class="d-none d-sm-inline-block">Add New Invoice</span></span></button>
+                            <button class="btn btn-secondary add-new btn-primary" onclick="window.location.href='{{route('invoice.client')}}';"><span><i class="ti ti-plus me-0 me-sm-1 ti-xs"></i><span class="d-none d-sm-inline-block">List Clients</span></span></button>
                         </div>
                   </div>
                 </div>

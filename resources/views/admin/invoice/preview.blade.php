@@ -29,14 +29,14 @@
                           <p class="mb-0">{{$company->phone}}</p>
                         </div>
                         <div>
-                          <h4 class="fw-semibold mb-2">INVOICE {{$cant_invoice+1}}</h4>
+                          <h4 class="fw-semibold mb-2">INVOICE {{$invoices->num_invoice}}</h4>
                           <div class="mb-2 pt-1">
                             <span>Date Issues:</span>
-                            <span class="fw-semibold">{{$invoice->date}}</span>
+                            <span class="fw-semibold">{{$invoices->date}}</span>
                           </div>
                           <div class="pt-1">
                             <span>Date Due:</span>
-                            <span class="fw-semibold">{{$invoice->due_date}}</span>
+                            <span class="fw-semibold">{{$invoices->due_date}}</span>
                           </div>
                         </div>
                       </div>
@@ -46,11 +46,11 @@
                       <div class="row p-sm-3 p-0">
                         <div class="col-xl-6 col-md-12 col-sm-5 col-12 mb-xl-0 mb-md-4 mb-sm-0 mb-4">
                           <h6 class="mb-3">Invoice To:</h6>
-                          <p class="mb-1">{{$client->name}} {{$client->lastname}}</p>
-                          <p class="mb-1">{{$client->name_company}}</p>
-                          <p class="mb-1">{{$client->address}}</p>
-                          <p class="mb-1">{{$client->phone}}</p>
-                          <p class="mb-0">{{$client->email}}</p>
+                          <p class="mb-1">{{$invoices->client->name}} {{$invoices->client->lastname}}</p>
+                          <p class="mb-1">{{$invoices->client->name_company}}</p>
+                          <p class="mb-1">{{$invoices->client->address}}</p>
+                          <p class="mb-1">{{$invoices->client->phone}}</p>
+                          <p class="mb-0">{{$invoices->client->email}}</p>
                         </div>
                         <div class="col-xl-6 col-md-12 col-sm-7 col-12">
                           <h6 class="mb-4">Bill To:</h6>
@@ -59,7 +59,7 @@
                                 <tbody>
                                 <tr>
                                     <td class="pe-4">Total Due:</td>
-                                    <td><strong>{{$currency->simbol}}{{$invoice->total}}</strong></td>
+                                    <td><strong>{{$currency->simbol}}{{$invoices->total}}</strong></td>
                                 </tr>
                                 @foreach($company->payment_method as $payment)
                                 <tr>
@@ -89,6 +89,7 @@
                       <table class="table m-0">
                         <thead>
                           <tr>
+                            <th></th>
                             <th>Item</th>
                             <th>Cost</th>
                             <th>Qty</th>
@@ -96,11 +97,12 @@
                           </tr>
                         </thead>
                         <tbody>
-                          @foreach($invo_items as $item) 
+                          @foreach($invoices->item as $item)
                             @php
-                                $price = $prices[$loop->index];
+                              $price = $item->price * $item->qty;
                             @endphp  
                             <tr>
+                                <td></td>
                                 <td class="text-nowrap">{{$item->description}}</td>
                                 <td>{{$currency->simbol}}{{$item->price}}</td>
                                 <td>{{$item->qty}}</td>
@@ -109,11 +111,7 @@
                           @endforeach
                           <tr>
                             <td colspan="3" class="align-top px-4 py-4">
-                              <p class="mb-2 mt-3">
-                                <span class="ms-3 fw-semibold">Salesperson:</span>
-                                <span>Alfie Solomons</span>
-                              </p>
-                              <span class="ms-3">Thanks for your business</span>
+                              
                             </td>
                             <td class="text-end pe-3 py-4">
                               <p class="mb-2 pt-3">Subtotal:</p>
@@ -122,10 +120,10 @@
                               <p class="mb-0 pb-3">Total:</p>
                             </td>
                             <td class="ps-2 py-4">
-                              <p class="fw-semibold mb-2 pt-3">{{$currency->simbol}}{{$invoice->total}}</p>
+                              <p class="fw-semibold mb-2 pt-3">{{$currency->simbol}}{{$invoices->total}}</p>
                               <p class="fw-semibold mb-2">{{$currency->simbol}}00.00</p>
                               <p class="fw-semibold mb-2">{{$currency->simbol}}00.00</p>
-                              <p class="fw-semibold mb-0 pb-3">{{$currency->simbol}}{{$invoice->total}}</p>
+                              <p class="fw-semibold mb-0 pb-3">{{$currency->simbol}}{{$invoices->total}}</p>
                             </td>
                           </tr>
                         </tbody>
@@ -152,31 +150,17 @@
                     <div class="card-body">
                       <button
                         class="btn btn-primary d-grid w-100 mb-2"
-                        data-bs-toggle="offcanvas"
-                        data-bs-target="#sendInvoiceOffcanvas"
                       >
                         <span class="d-flex align-items-center justify-content-center text-nowrap"
                           ><i class="ti ti-send ti-xs me-1"></i>Send Invoice</span
                         >
                       </button>
-                      <button class="btn btn-label-secondary d-grid w-100 mb-2">Download</button>
-                      <a
-                        class="btn btn-label-secondary d-grid w-100 mb-2"
-                        target="_blank"
-                        href="./app-invoice-print.html"
-                      >
-                        Print
-                      </a>
-                      <a href="./app-invoice-edit.html" class="btn btn-label-secondary d-grid w-100 mb-2">
-                        Edit Invoice
-                      </a>
+                      
                       <button
-                        class="btn btn-primary d-grid w-100"
-                        data-bs-toggle="offcanvas"
-                        data-bs-target="#addPaymentOffcanvas"
+                        class="btn btn-primary d-grid w-100" onclick="window.location.href='{{route('invoice.show.client', $invoices->id)}}';"
                       >
                         <span class="d-flex align-items-center justify-content-center text-nowrap"
-                          ><i class="ti ti-currency-dollar ti-xs me-1"></i>Add Payment</span
+                          >Download</span
                         >
                       </button>
                     </div>

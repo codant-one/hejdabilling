@@ -39,11 +39,12 @@ Route::middleware(['auth'])->group(function ()
     Route::get('/list-clients', [InvoiceController::class, 'list_client'])->name('invoice.client');
     Route::post('/register-clients', [InvoiceController::class, 'add_client'])->name('invoice.add.client');
     Route::post('/generate-invoice/{id}', [InvoiceController::class, 'generate_invoice'])->name('invoice.generate');
-    Route::get('/preview', [InvoiceController::class, 'preview'])->name('invoice.preview');
+    Route::get('/preview/{id}', [InvoiceController::class, 'preview'])->name('invoice.preview');
     Route::get('/edit_client/{id}',[InvoiceController::class, 'edit_client'])->name('invoice.edit.client');
     Route::post('/client/update/{id}',[InvoiceController::class, 'update_client'])->name('invoice.client.update');
     Route::get('/client/invoices/{id}',[InvoiceController::class, 'invoice_client'])->name('invoice.history.client');
-
+    Route::get('/show/invoice/{id}',[InvoiceController::class, 'show_invoice'])->name('invoice.show.client');
+    Route::get('/history/inovices',[InvoiceController::class, 'history_inovices'])->name('invoice.history.user');
 });
 
 Route::name('auth.')->middleware(['auth'])->group(function () {

@@ -72,6 +72,7 @@
     <link rel="stylesheet" href="{{asset('/assets/vendor/css/pages/page-profile.css')}}" />
     <link rel="stylesheet" href="{{asset('/assets/vendor/css/pages/page-auth.css')}}" />
     <link rel="stylesheet" href="{{asset('/assets/vendor/css/pages/app-invoice.css')}}" />
+    
     <!-- Helpers -->
     
     <script src="{{asset('/assets/vendor/js/helpers.js')}}"></script>
