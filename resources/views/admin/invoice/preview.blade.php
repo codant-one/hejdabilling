@@ -17,7 +17,7 @@
                         <div class="mb-xl-0 mb-4">
                           <div class="d-flex svg-illustration mb-4 gap-2 align-items-center">
                             @if($company->logo)
-                                <img src="{{$company->logo}}" alt="Company logo" width="70">
+                                <img src="{{asset('storage/'.$company->logo) }}" alt="Company logo" width="70">
                             @else
                                 <img src="{{ asset('assets/img/illustrations/icon-login-hejdabilling.png') }}" alt="logo" width="50">
                             @endif
@@ -148,8 +148,8 @@
                 <div class="col-xl-3 col-md-4 col-12 invoice-actions">
                   <div class="card">
                     <div class="card-body">
-                      <button
-                        class="btn btn-primary d-grid w-100 mb-2"
+                      <button 
+                        class="btn btn-primary d-grid w-100 mb-2" onclick="window.location.href='{{route('invoice.send', $invoices->id)}}';"
                       >
                         <span class="d-flex align-items-center justify-content-center text-nowrap"
                           ><i class="ti ti-send ti-xs me-1"></i>Send Invoice</span
@@ -161,6 +161,14 @@
                       >
                         <span class="d-flex align-items-center justify-content-center text-nowrap"
                           >Download</span
+                        >
+                      </button>
+                                  <br>
+                      <button
+                        class="btn btn-primary d-grid w-100" onclick="window.location.href='{{route('invoice.history.client', $invoices->client->id)}}';"
+                      >
+                        <span class="d-flex align-items-center justify-content-center text-nowrap"
+                          >Invoice Client</span
                         >
                       </button>
                     </div>

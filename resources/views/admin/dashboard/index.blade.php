@@ -14,7 +14,7 @@
                   />
                 </div>
                 <div class="layout-demo-info">
-                  <h4>Soon Hejdabilling</h4>
+                  <h4>Soon Hejdåbilling</h4>
                   <!--<div class="alert alert-primary mt-4" role="alert">
                     <strong>Important:</strong> If you have enabled localStorage then the menu (navigation) will be
                     synced with localStorage value.

@@ -24,7 +24,7 @@
                       <div class="d-flex align-items-start align-items-sm-center gap-4">
                         @if(auth()->user()->avatar)
                         <img
-                          src="{{auth()->user()->avatar}}"
+                          src="{{asset('storage/'.auth()->user()->avatar) }}"
                           alt="user-avatar"
                           class="d-block w-px-100 h-px-100 rounded"
                           id="uploadedAvatar"
@@ -181,27 +181,27 @@
                           <!------------FIN DATOS COMPAÑIA---------->
                           <!----------------DATOS DE PAGO---------------------->
                           <h5 class="card-header">Payment information</h5>
-                          
+                          @foreach($user['company']['payment_method'] as $payment)
                           <div class="mb-3 col-md-6">
                             <label class="form-label">Bank Name</label>
-                            <input type="text" class="form-control"  name="name_bank" value="{{$user['company']['payment_method']['name_bank'] ?? null}}" placeholder="Bank Name" required/>
+                            <input type="text" class="form-control"  name="name_bank" value="{{$payment->name_bank ?? null}}" placeholder="Bank Name" required/>
                           </div>
 
                           <div class="mb-3 col-md-6">
                             <label  class="form-label">Account Number</label>
-                            <input  type="text" class="form-control"  name="account_number" value="{{$user['company']['payment_method']['account_number'] ?? null}}" placeholder="Account Number" required/>
+                            <input  type="text" class="form-control"  name="account_number" value="{{$payment->account_number ?? null}}" placeholder="Account Number" required/>
                           </div>
 
                           <div class="mb-3 col-md-6">
                             <label  class="form-label">IBAN</label>
-                            <input  type="text" class="form-control"  name="iban" value="{{$user['company']['payment_method']['iban'] ?? null}}" placeholder="Iban" />
+                            <input  type="text" class="form-control"  name="iban" value="{{$payment->iban ?? null}}" placeholder="Iban" />
                           </div>
 
                           <div class="mb-3 col-md-6">
                             <label  class="form-label">Swish</label>
-                            <input  type="text" class="form-control"  name="swish" value="{{$user['company']['payment_method']['swish'] ?? null}}" placeholder="Swish" />
+                            <input  type="text" class="form-control"  name="swish" value="{{$payment->swish ?? null}}" placeholder="Swish" />
                           </div>
-
+                          @endforeach
                       <!------------FIN DATOS DE PAGO---------------------->
                         </div>
                         
@@ -215,7 +215,7 @@
                     </div>
                     <!-- /Account -->
                   </div>
-                  <div class="card">
+                  <!--<div class="card">
                     <h5 class="card-header">Delete Account</h5>
                     <div class="card-body">
                       <div class="mb-3 col-12 mb-0">
@@ -239,7 +239,7 @@
                         <button type="submit" class="btn btn-danger deactivate-account">Deactivate Account</button>
                       </form>
                     </div>
-                  </div>
+                  </div>-->
                 </div>
               </div>
             </div>

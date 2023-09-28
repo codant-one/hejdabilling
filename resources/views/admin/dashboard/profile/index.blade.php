@@ -18,7 +18,7 @@
                       <div class="flex-shrink-0 mt-n2 mx-sm-0 mx-auto">
                         @if(auth()->user()->avatar)
                         <img
-                          src="{{auth()->user()->avatar}}"
+                          src="{{asset('storage/'.auth()->user()->avatar) }}"
                           alt="user image"
                           class="d-block h-auto ms-0 ms-sm-4 rounded user-profile-img"
                         />
@@ -201,7 +201,7 @@
                             <!--<p class="mb-2">Project meeting with john @10:15am</p>-->
                             <div class="d-flex flex-wrap">
                               <div class="avatar me-2">
-                                <img src="{{$companies->logo}}" alt="logo" class="rounded-circle" />
+                                <img src="{{asset('storage/'.$companies->logo) }}" alt="logo" class="rounded-circle" />
                               </div>
                               <div class="ms-1">
                                 <h6 class="mb-0">{{auth()->user()->nick}}</h6>

@@ -49,7 +49,7 @@
     <div class="invoice">
         <div class="invoice-header">
             <div class="logo">
-                <img src="{{auth()->user()->avatar}}" alt="" width="50">
+                <img src="{{asset('storage/'.auth()->user()->avatar) }}" alt="" width="50">
             </div>
             <div class="invoice-details">
                 <p>Número de Factura: 12345</p>
@@ -76,7 +76,7 @@
                     <th>Precio Unitario</th>
                     <th>Cantidad</th>
                     <th>Total</th>
-                    <th><img src="{{url('https://acmgen.org/wp-content/uploads/2022/06/logo_acmgen_2023.png')}}" alt="logo" width="50"></th>{{public_path().'/storage/images/pdf/your_image.jpeg'}}
+                    <th><img src="https://acmgen.org/wp-content/uploads/2022/06/logo_acmgen_2023.png" alt="logo" width="50"></th>{{public_path().'/storage/images/pdf/your_image.jpeg'}}
                 </tr>
             </thead>
             <tbody>

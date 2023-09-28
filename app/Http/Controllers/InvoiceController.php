@@ -233,4 +233,140 @@ class InvoiceController extends Controller
         return view('admin.invoice.history', compact('invoices','due_total','total_invoices','company'));
     }
 
+    public function new_invoice()
+    {
+        $user = User::where('id',auth()->user()->id)->first(); 
+        $clients = Client::where('user_id',$user->id)->get();
+        $company = Company::with(['user','payment_method', 'country'])->where('user_id',auth()->user()->id)->first();
+        $currencies = Currency::all();
+        
+        $cant_invoice = $user->user_client->flatMap(function ($client) {
+            return $client->invoice;
+        })->count();
+
+        return view('admin.invoice.new_invoice',compact('user','clients','company','currencies','cant_invoice'));
+    }
+
+    public function get_client($id)
+    {
+        $client = Client::find($id);
+        return response()->json(['client' => $client]);
+        
+    }
+
+    public function plantilla_invoice($id)
+    {
+        $invoices = Invoice::with('client','item')->where('id',$id)->first();
+        $user = User::where('id',auth()->user()->id)->first();
+        $company = Company::with(['user','payment_method', 'country'])->where('user_id',$user->id)->first();
+        $currency = Currency::where('id',$invoices->currency_id)->first();
+        $cant_invoice = $user->user_client->flatMap(function ($client) {
+            return $client->invoice;
+        })->count();
+
+        //dd($invoices);
+        $pdf = PDF::loadView('admin.invoice.pdf.send', compact('invoices','company','cant_invoice','currency'))->save(storage_path('app/public/pdfs').'/prueba.pdf');
+        //$pdf = PDF::setOptions(['isHtml5ParserEnabled' => true, 'isRemoteEnabled' => true])->loadView('admin.invoice.pdf.plantilla')->setOptions(['defaultFont' => 'sans-serif'])->save(storage_path('app/public/pdfs').'/'.'prueba'.'.pdf');
+        return $pdf->download('invoice-hejdabilling.pdf');
+        //return view('admin.invoice.pdf.plantilla');
+    }
+
+
+    //New Invoice desde la opción add invoice en invoice
+
+    public function store_invoice(Request $request)
+    {
+        $costos = $request->input('cost');
+        $items = $request->input('item-details');
+        $qtys = $request->input('qty');
+        $date_ini = $request->date_hidden;
+        $due_date = $request->duedate_hidden;
+        $currency = Currency::where('id', $request->typecurrency)->first();
+
+        
+        $prices = [];
+        
+        $user = User::where('id',auth()->user()->id)->first();
+        $client = Client::with(['user'])->where('id',$request->id_client)->first();
+        $company = Company::with(['user','payment_method', 'country'])->where('user_id',auth()->user()->id)->first();
+        //Limpiando los array del formulario de campos null
+        //dd($prices);
+
+        
+        $cant_invoice = $user->user_client->flatMap(function ($client) {
+            return $client->invoice;
+        })->count();
+
+        //dd($cant_invoice);
+
+        $costos = array_filter($costos, function($elemento) {
+            return $elemento !== null;
+        });
+        
+        $items = array_filter($items, function($elemento2) {
+            return $elemento2 !== null;
+        });
+        
+        $qtys = array_filter($qtys, function($elemento3) {
+            return $elemento3 !== null;
+        });
+        $lenght_array = count($costos);
+        $subtotal = 0;
+        for ($i=0; $i < $lenght_array ; $i++) { 
+            $prices[$i]= $costos[$i]*$qtys[$i];
+            $subtotal = $subtotal + $prices[$i];
+        }
+
+        //calculamos el número de facturas
+
+        
+        
+
+        //Creamos y guardamos los datos de la nueva factura
+        $invoice = new Invoice();
+        $invoice->client_id = $client->id;
+        $invoice->payment_method_id = $company->payment_method[0]->id;
+        $invoice->currency_id = $currency->id;
+        $invoice->date = $date_ini;
+        $invoice->due_date = $due_date;
+        $invoice->num_invoice = $cant_invoice;
+        $invoice->total = $subtotal;
+        $invoice->save();
+       
+
+        for ($i=0; $i < $lenght_array ; $i++) { 
+            $item = new Item();
+            $item->invoice_id = $invoice->id;
+            $item->description = $items[$i];
+            $item->price = $costos[$i];
+            $item->qty = $qtys[$i];
+            $item->save();
+        }
+
+        $invo_items = Item::where('invoice_id',$invoice->id)->get();
+    
+        return redirect()->route('invoice.preview', $invoice->id);
+    
+    }
+
+    //Duplicar Invoice
+
+    public function duplicate_invoice($id)
+    
+    {
+        $invoices = Invoice::with(['client','item'])->where('id',$id)->first();
+        $company = Company::with(['user','payment_method', 'country'])->where('user_id',auth()->user()->id)->first();
+        $currency = Currency::find($invoices->currency_id);
+        $currencies = Currency::all();
+        $user = User::where('id',auth()->user()->id)->first();
+        $client = Client::with(['user'])->where('id',$invoices->client_id)->first();
+        $clients = Client::where('user_id',$user->id)->get();
+        $cant_invoice = $user->user_client->flatMap(function ($client) {
+            return $client->invoice;
+        })->count();
+
+        return view('admin.invoice.duplicate', compact('invoices','company','currency','cant_invoice','clients','currencies'));
+
+    }
+
 }

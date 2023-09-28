@@ -45,6 +45,12 @@ Route::middleware(['auth'])->group(function ()
     Route::get('/client/invoices/{id}',[InvoiceController::class, 'invoice_client'])->name('invoice.history.client');
     Route::get('/show/invoice/{id}',[InvoiceController::class, 'show_invoice'])->name('invoice.show.client');
     Route::get('/history/inovices',[InvoiceController::class, 'history_inovices'])->name('invoice.history.user');
+    Route::get('/new-inovices',[InvoiceController::class, 'new_invoice'])->name('invoice.new');
+    Route::get('/get-client/{id}',[InvoiceController::class, 'get_client'])->name('invoice.get_client');
+    Route::get('/plantilla/invoice',[InvoiceController::class, 'plantilla_invoice'])->name('invoice.plantilla');
+    Route::post('/new/invoice',[InvoiceController::class, 'store_invoice'])->name('invoice.store');
+    Route::get('/duplicate/invoice/{id}',[InvoiceController::class, 'duplicate_invoice'])->name('invoice.duplicate');
+    Route::get('/send/invoice/{id}',[InvoiceController::class, 'plantilla_invoice'])->name('invoice.send');
 });
 
 Route::name('auth.')->middleware(['auth'])->group(function () {

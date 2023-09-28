@@ -20,7 +20,7 @@ class="light-style layout-navbar-fixed layout-menu-fixed layout-menu-collapsed"
         <div class="mb-4">
           <div class="d-flex svg-illustration mb-3 gap-2">
             @if($company->logo)
-                <img src="{{$company->logo}}" alt="Company logo" width="70">
+                <img src="{{asset('storage/'.$company->logo) }}" alt="Company logo" width="70">
             @else
                 <img src="{{ asset('assets/img/illustrations/icon-login-hejdabilling.png') }}" alt="logo" width="50">
             @endif

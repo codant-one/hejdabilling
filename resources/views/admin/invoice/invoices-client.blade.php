@@ -43,7 +43,11 @@
                     </div>
                   </div>
                 </div>
-                
+                <div class="col-sm-6 col-xl-3">
+                </div>
+                <div class="col-sm-6 col-xl-3" style="margin:auto;text-align:right;">
+                  <button class="btn btn-secondary add-new btn-primary" onclick="window.location.href='{{route('invoice.client')}}';"><span><i class="fa-solid fa-arrow-left" style="color: #ffffff;"></i><span class="d-none d-sm-inline-block">List Clients</span></span></button>
+                </div>
                 
               </div>
               <!-- Users List Table -->

@@ -154,7 +154,7 @@ class AdminController extends Controller
                 $file = $request->file('logo');
                 $file_name = $users->name.Carbon::now()->format('Y-m-d').".".$file->extension();
                 $file->storeAs('logos', $file_name,'public');
-                $companies->logo = env('APP_URL').'/storage/logos'.'/'.$file_name;
+                $companies->logo = 'logos'.'/'.$file_name;
                 
             }
 
@@ -178,7 +178,7 @@ class AdminController extends Controller
                 $file = $request->file('logo');
                 $file_name = $users->name.Carbon::now()->format('Y-m-d').".".$file->extension();
                 $file->storeAs('logos', $file_name,'public');
-                $company->logo = env('APP_URL').'/storage/logos'.'/'.$file_name;
+                $company->logo = 'logos'.'/'.$file_name;
                 
             }
 
@@ -202,7 +202,7 @@ class AdminController extends Controller
             $file_avatar = $request->file('avatar');
             $file_nameavatar = "a-".$users->name.Carbon::now()->format('Y-m-d').".".$file_avatar->extension();
             $file_avatar->storeAs('avatars', $file_nameavatar,'public');
-            $users->avatar = env('APP_URL').'/storage/avatars'.'/'.$file_nameavatar;
+            $users->avatar = 'avatars'.'/'.$file_nameavatar;
 
         }
 

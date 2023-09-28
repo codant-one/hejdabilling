@@ -39,7 +39,7 @@
               </a>
             </div>
             <!-- /Logo -->
-            <h3 class="mb-1 fw-bold">Welcome to Hejdabilling! 👋</h3>
+            <h3 class="mb-1 fw-bold">Welcome to Hejdåbilling! 👋</h3>
             <p class="mb-4">Please sign-in to your account</p>
 
             <form id="formAuthentication" class="mb-3" action="{{route('admin.authenticate')}}" method="POST">

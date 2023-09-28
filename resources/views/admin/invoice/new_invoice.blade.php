@@ -69,11 +69,11 @@
                       <div class="row p-sm-4 p-0">
                         <div class="col-md-6 col-sm-5 col-12 mb-sm-0 mb-4">
                           <h6 class="mb-4">Invoice To:</h6>
-                          <p class="mb-1">{{$client->name}} {{$client->lastname}}</p>
-                          <p class="mb-1">{{$client->name_company}}</p>
-                          <p class="mb-1">{{$client->address}}</p>
-                          <p class="mb-1">{{$client->phone}}</p>
-                          <p class="mb-0">{{$client->email}}</p>
+                          <p class="mb-1" id="client-name"></p>
+                          <p class="mb-1" id="client-company"></p>
+                          <p class="mb-1" id="client-org"></p>
+                          <p class="mb-1" id="client-num"></p>
+                          <p class="mb-0" id="client-email"></p>
                         </div>
                         <div class="col-md-6 col-sm-7">
                           <h6 class="mb-4">Bill To:</h6>
@@ -108,7 +108,7 @@
 
                       <hr class="my-3 mx-n4" />
                       
-                      <form class="pt-4 px-0 px-sm-4" id="formularioFactura" action="{{route('invoice.generate',$client->id)}}" method="POST">
+                      <form class="pt-4 px-0 px-sm-4" id="formularioFactura" action="{{route('invoice.store')}}" method="POST">
                         <div class="mb-3">
                           <div class="repeater-wrapper pt-0 pt-md-4 item">
                             <div class="d-flex border rounded position-relative pe-0">
@@ -296,6 +296,18 @@
                       </select>
                       <input type="hidden" name="date_hidden" id="date_hidden" value="{{ date('Y-m-d') }}" />
                       <input type="hidden" name="duedate_hidden" id="duedate_hidden" value="{{$fechaSumada}}" />
+                      <input type="hidden" name="id_client" id="id_client" value=""/>
+                      <p class="mb-2">Select Client</p>
+                      <select  class="form-select mb-4" name="client-id"  id="client-id" required>
+                        <option value="">Select</option>
+                        @foreach($clients as $client)
+                        @if($client->name)
+                        <option value="{{$client->id}}">{{$client->name}} {{$client->lastname}}</option>
+                        @else
+                        <option value="{{$client->id}}">{{$client->name_company}}</option>
+                        @endif
+                        @endforeach
+                      </select>
                       @csrf
                       <button
                         type="submit"
@@ -308,7 +320,11 @@
                       <button type="button" class="btn btn-label-secondary d-grid w-100">Save</button>-->
                     </div>
                   </div>
+                  
                   <div>
+
+                  
+                  
               </form>   
               </div>
               <button  class="btn btn-primary d-grid w-100 mb-2" onclick="window.location.href='{{route('invoice.client')}}';">Return list Clients</button>
@@ -422,6 +438,39 @@ function add_item()
         });
 
 
+       $('#client-id') .on('change', function(){
+
+        // Obtiene el valor seleccionado
+        var client_id = $(this).val();
+var route = "{{ route('invoice.get_client', ['id' => 'id-here']) }}"
+        $.ajax({
+                type: "GET",
+                url: route.replaceAll('id-here', client_id), // Reemplaza 'ruta.ajax' con la ruta correcta en tu aplicación
+                success: function(response) {
+                    // Actualiza la parte de la plantilla con la respuesta del servidor
+                    //$("#resultado").html(response);
+                    if(response.client.name === null)
+                    {
+                      $('#client-company').text(response.client.name_company);
+                      $('#client-org').text(response.client.org_num);
+                      $('#client-name').text("");
+                     
+                    }
+                    else
+                    {
+                      $('#client-name').text(response.client.name + " " + response.client.lastname);
+                      $('#client-company').text("");
+                      $('#client-org').text("");
+                    }
+                    $('#client-num').text(response.client.phone);
+                    $('#client-email').text(response.client.email);
+                    $('#id_client').val(response.client.id);
+                    
+                }
+            });
+
+
+       })
 
 
 
