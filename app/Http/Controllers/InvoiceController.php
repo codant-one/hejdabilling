@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Mail;
 use App\Models\User;
 use App\Models\Company;
 use App\Models\Client;
@@ -14,6 +15,7 @@ use Carbon\Carbon;
 use Validator;
 use Illuminate\Validation\Rule;
 use PDF;
+use App\Mail\Invoice_mail;
 
 class InvoiceController extends Controller
 {
@@ -267,8 +269,25 @@ class InvoiceController extends Controller
         //dd($invoices);
         $pdf = PDF::loadView('admin.invoice.pdf.send', compact('invoices','company','cant_invoice','currency'))->save(storage_path('app/public/pdfs').'/prueba.pdf');
         //$pdf = PDF::setOptions(['isHtml5ParserEnabled' => true, 'isRemoteEnabled' => true])->loadView('admin.invoice.pdf.plantilla')->setOptions(['defaultFont' => 'sans-serif'])->save(storage_path('app/public/pdfs').'/'.'prueba'.'.pdf');
-        return $pdf->download('invoice-hejdabilling.pdf');
+        $pdfFileName = 'invoice-hejdabilling.pdf';
+        $recipientEmail = 'dbolivarv90@gmail.com';
+        //return $pdf->download('invoice-hejdabilling.pdf');
         //return view('admin.invoice.pdf.plantilla');
+        
+
+
+        try {
+     
+            Mail::to($recipientEmail)->send(new Invoice_mail($pdf, $pdfFileName));
+     
+     
+            if(Mail::failures() != 0) {
+                
+                 return redirect()->route('invoice.preview',$invoices->id)->with('jsAlert', "invoice sent successfully");
+             }
+         }
+             catch (\Exception $e)
+                 {return redirect()->route('graphics')->with('jsAlert', $e );}
     }
 
 
