@@ -163,6 +163,14 @@
                           >Download</span
                         >
                       </button>
+                        <br>
+                      <button
+                        class="btn btn-primary d-grid w-100" onclick="window.location.href='{{route('invoice.duplicate',$invoices->id)}}';"
+                      >
+                        <span class="d-flex align-items-center justify-content-center text-nowrap"
+                          >Duplicate</span
+                        >
+                      </button>
                                   <br>
                       <button
                         class="btn btn-primary d-grid w-100" onclick="window.location.href='{{route('invoice.history.client', $invoices->client->id)}}';"

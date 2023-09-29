@@ -231,8 +231,14 @@ class InvoiceController extends Controller
         $due_total = $invoices->sum('total'); 
         $total_invoices = $invoices->count();
         //dd($invoices);
+        if ($invoices ===null || $company===null) {
+            return redirect()->route('admin.dashboard')->with('jsAlerterror', "you still have no invoices in your history");
+        }
+        else{
+            return view('admin.invoice.history', compact('invoices','due_total','total_invoices','company'));
+        }
 
-        return view('admin.invoice.history', compact('invoices','due_total','total_invoices','company'));
+        
     }
 
     public function new_invoice()
@@ -245,7 +251,9 @@ class InvoiceController extends Controller
         $cant_invoice = $user->user_client->flatMap(function ($client) {
             return $client->invoice;
         })->count();
-
+        if ($clients ===null || $company===null) {
+            return redirect()->route('admin.profile.edit')->with('jsAlerterror', "You have not registered your company data to start invoicing.");
+        }
         return view('admin.invoice.new_invoice',compact('user','clients','company','currencies','cant_invoice'));
     }
 
@@ -270,7 +278,7 @@ class InvoiceController extends Controller
         $pdf = PDF::loadView('admin.invoice.pdf.send', compact('invoices','company','cant_invoice','currency'))->save(storage_path('app/public/pdfs').'/prueba.pdf');
         //$pdf = PDF::setOptions(['isHtml5ParserEnabled' => true, 'isRemoteEnabled' => true])->loadView('admin.invoice.pdf.plantilla')->setOptions(['defaultFont' => 'sans-serif'])->save(storage_path('app/public/pdfs').'/'.'prueba'.'.pdf');
         $pdfFileName = 'invoice-hejdabilling.pdf';
-        $recipientEmail = 'dbolivarv90@gmail.com';
+        $recipientEmail = $invoices->client->email;
         //return $pdf->download('invoice-hejdabilling.pdf');
         //return view('admin.invoice.pdf.plantilla');
         
@@ -310,7 +318,7 @@ class InvoiceController extends Controller
         $company = Company::with(['user','payment_method', 'country'])->where('user_id',auth()->user()->id)->first();
         //Limpiando los array del formulario de campos null
         //dd($prices);
-
+     
         
         $cant_invoice = $user->user_client->flatMap(function ($client) {
             return $client->invoice;
@@ -337,11 +345,6 @@ class InvoiceController extends Controller
         }
 
         //calculamos el número de facturas
-
-        
-        
-
-        //Creamos y guardamos los datos de la nueva factura
         $invoice = new Invoice();
         $invoice->client_id = $client->id;
         $invoice->payment_method_id = $company->payment_method[0]->id;
@@ -363,8 +366,14 @@ class InvoiceController extends Controller
         }
 
         $invo_items = Item::where('invoice_id',$invoice->id)->get();
+
+        
     
         return redirect()->route('invoice.preview', $invoice->id);
+      
+
+        //Creamos y guardamos los datos de la nueva factura
+        
     
     }
 
