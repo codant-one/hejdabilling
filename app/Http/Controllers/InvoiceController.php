@@ -275,7 +275,7 @@ class InvoiceController extends Controller
         })->count();
 
         //dd($invoices);
-        $pdf = PDF::loadView('admin.invoice.pdf.send', compact('invoices','company','cant_invoice','currency'))->save(storage_path('app/public/pdfs').'/prueba.pdf');
+        $pdf = PDF::loadView('admin.invoice.pdf.template_invoice', compact('invoices','company','cant_invoice','currency'))->save(storage_path('app/public/pdfs').'/prueba.pdf');
         //$pdf = PDF::setOptions(['isHtml5ParserEnabled' => true, 'isRemoteEnabled' => true])->loadView('admin.invoice.pdf.plantilla')->setOptions(['defaultFont' => 'sans-serif'])->save(storage_path('app/public/pdfs').'/'.'prueba'.'.pdf');
         $pdfFileName = 'invoice-hejdabilling.pdf';
         $recipientEmail = $invoices->client->email;

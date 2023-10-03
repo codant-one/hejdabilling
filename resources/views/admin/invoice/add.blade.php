@@ -128,20 +128,6 @@
                                     min="12"
                                     name="cost[]"
                                   />
-                                  <!--<div>
-                                    <span>Discount:</span>
-                                    <span class="discount me-2">0%</span>
-                                    <span
-                                      class="tax-1 me-2"
-                                      data-bs-toggle="tooltip"
-                                      data-bs-placement="top"
-                                      title="Tax 1"
-                                      >0%</span
-                                    >
-                                    <span class="tax-2" data-bs-toggle="tooltip" data-bs-placement="top" title="Tax 2"
-                                      >0%</span
-                                    >
-                                  </div>-->
                                 </div>
                                 <div class="col-md-2 col-12 mb-md-0 mb-3">
                                   <p class="mb-2 repeater-title">Qty</p>
@@ -162,7 +148,7 @@
                               <div
                                 class="d-flex flex-column align-items-center justify-content-between border-start p-2"
                               >
-                                <i class="ti ti-x cursor-pointer" data-repeater-delete></i>
+                                <i class="ti ti-x cursor-pointer" data-repeater-delete></i> 
                                 <div class="dropdown">
                                   <i
                                     class="ti ti-settings ti-xs cursor-pointer more-options-dropdown"
@@ -323,17 +309,23 @@
 function add_item()
 {
 
-
-         var item = $(this).closest(".item");
+        var item = $(this).closest(".item");
         // Clonar el grupo de campos del primer item
         var newItem = $(".item:first").clone();
-        
+
         // Limpiar los valores del nuevo item
         newItem.find('input').val('');
-        newItem.insertAfter(item);
-        // Agregar el nuevo item clonado al formulario
+        console.log('Después de insertar:', item);
+        // Insertar el nuevo item clonado después del elemento original
+        item.after(newItem);
+        console.log('Después de clonar:', newItem);
+
+
+
+        // Mover el elemento clonado al final del formulario
         $("#formularioFactura").append(newItem);
 
+      
         ///Recorrido de names
 
         // Seleccionar todos los elementos con el atributo "name" igual a "cost[]"
