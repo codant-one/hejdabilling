@@ -69,11 +69,11 @@
                       <div class="row p-sm-4 p-0">
                         <div class="col-md-6 col-sm-5 col-12 mb-sm-0 mb-4">
                           <h6 class="mb-4">Invoice To:</h6>
-                          <p class="mb-1" id="client-name"></p>
-                          <p class="mb-1" id="client-company"></p>
-                          <p class="mb-1" id="client-org"></p>
-                          <p class="mb-1" id="client-num"></p>
-                          <p class="mb-0" id="client-email"></p>
+                          <p class="mb-1" id="client-name">{{$invoices->client->name}}{{$invoices->client->lastname}}</p>
+                          <p class="mb-1" id="client-company">{{$invoices->client->name_company}}</p>
+                          <p class="mb-1" id="client-org">{{$invoices->client->org_num}}</p>
+                          <p class="mb-1" id="client-num">{{$invoices->client->phone}}</p>
+                          <p class="mb-0" id="client-email">{{$invoices->client->email}}</p>
                         </div>
                         <div class="col-md-6 col-sm-7">
                           <h6 class="mb-4">Bill To:</h6>
@@ -110,9 +110,9 @@
                       
                       <form class="pt-4 px-0 px-sm-4" id="formularioFactura" action="{{route('invoice.store')}}" method="POST">
                         
-                        <div class="mb-3">
+                        <div class="mb-3" id="newitems">
                             @foreach($invoices->item as $item)    
-                          <div class="repeater-wrapper pt-0 pt-md-4 item">
+                          <div class="repeater-wrapper pt-0 pt-md-4 item" id="item1">
                             <div class="d-flex border rounded position-relative pe-0">
                               <div class="row w-100 p-3">
                                 <div class="col-md-6 col-12 mb-md-0 mb-3">
@@ -157,7 +157,7 @@
                               <div
                                 class="d-flex flex-column align-items-center justify-content-between border-start p-2"
                               >
-                                <i class="ti ti-x cursor-pointer" data-repeater-delete></i>
+                                <i class="ti ti-x cursor-pointer eliminar_item" data-repeater-delete id="eliminar1"></i>
                                 <div class="dropdown">
                                   <i
                                     class="ti ti-settings ti-xs cursor-pointer more-options-dropdown"
@@ -331,10 +331,10 @@
             <!-- / Content -->
 
 <script>
-
+var contadorClones = 2;
 function add_item()
 {
-
+  var aux = contadorClones;
 
          var item = $(this).closest(".item");
         // Clonar el grupo de campos del primer item
@@ -343,8 +343,20 @@ function add_item()
         // Limpiar los valores del nuevo item
         newItem.find('input').val('');
         newItem.insertAfter(item);
+        newItem.attr('id', 'item'+contadorClones);
         // Agregar el nuevo item clonado al formulario
-        $("#formularioFactura").append(newItem);
+        $("#newitems").append(newItem);
+
+        var seccionOriginal = $('#item'+contadorClones+' .eliminar_item'); // Obtener la primera sección original
+
+        seccionOriginal.attr('id', 'eliminar'+contadorClones); // Asignar un ID único
+
+
+        $('#eliminar'+aux).click(function() {
+          $('#item'+aux).remove(); // Elimina el elemento con ID "eliminar2"
+        });
+
+        contadorClones++;
 
         ///Recorrido de names
 

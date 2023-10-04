@@ -6,7 +6,7 @@
 <!--ALERTAS-->
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
-<!--<script src="{{ asset('/fakit.js') }}"></script>-->
+<script src="{{ asset('/assets/js/fakit.js') }}"></script>
 
 <!---------------------public/vendor---------------------->
 

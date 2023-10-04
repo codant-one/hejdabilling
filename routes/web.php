@@ -51,6 +51,12 @@ Route::middleware(['auth'])->group(function ()
     Route::post('/new/invoice',[InvoiceController::class, 'store_invoice'])->name('invoice.store');
     Route::get('/duplicate/invoice/{id}',[InvoiceController::class, 'duplicate_invoice'])->name('invoice.duplicate');
     Route::get('/send/invoice/{id}',[InvoiceController::class, 'plantilla_invoice'])->name('invoice.send');
+
+
+    ///MANAGE USERS
+
+    Route::get('/admin/users',[AdminController::class, 'show_users'])->name('admin.show.users');
+    Route::post('/admin/add-user',[AdminController::class, 'store_user'])->name('admin.add.user');
 });
 
 Route::name('auth.')->middleware(['auth'])->group(function () {

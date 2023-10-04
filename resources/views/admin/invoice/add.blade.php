@@ -109,8 +109,8 @@
                       <hr class="my-3 mx-n4" />
                       
                       <form class="pt-4 px-0 px-sm-4" id="formularioFactura" action="{{route('invoice.generate',$client->id)}}" method="POST">
-                        <div class="mb-3">
-                          <div class="repeater-wrapper pt-0 pt-md-4 item">
+                        <div class="mb-3" id="newitems">
+                          <div class="repeater-wrapper pt-0 pt-md-4 item" id="item1">
                             <div class="d-flex border rounded position-relative pe-0">
                               <div class="row w-100 p-3">
                                 <div class="col-md-6 col-12 mb-md-0 mb-3">
@@ -148,7 +148,7 @@
                               <div
                                 class="d-flex flex-column align-items-center justify-content-between border-start p-2"
                               >
-                                <i class="ti ti-x cursor-pointer" data-repeater-delete></i> 
+                                <i class="ti ti-x cursor-pointer eliminar_item" data-repeater-delete id="eliminar1"></i> 
                                 <div class="dropdown">
                                   <i
                                     class="ti ti-settings ti-xs cursor-pointer more-options-dropdown"
@@ -305,25 +305,36 @@
             <!-- / Content -->
 
 <script>
-
+var contadorClones = 2;
 function add_item()
 {
-
+        var aux = contadorClones;
         var item = $(this).closest(".item");
         // Clonar el grupo de campos del primer item
         var newItem = $(".item:first").clone();
 
         // Limpiar los valores del nuevo item
         newItem.find('input').val('');
-        console.log('Después de insertar:', item);
         // Insertar el nuevo item clonado después del elemento original
-        item.after(newItem);
-        console.log('Después de clonar:', newItem);
+        newItem.insertAfter(item);
+        newItem.attr('id', 'item'+contadorClones);
 
 
 
         // Mover el elemento clonado al final del formulario
-        $("#formularioFactura").append(newItem);
+        $("#newitems").append(newItem);
+
+        var seccionOriginal = $('#item'+contadorClones+' .eliminar_item'); // Obtener la primera sección original
+
+        seccionOriginal.attr('id', 'eliminar'+contadorClones); // Asignar un ID único
+  
+
+        $('#eliminar'+aux).click(function() {
+          $('#item'+aux).remove(); // Elimina el elemento con ID "eliminar2"
+          recalcular();
+        });
+
+        contadorClones++;
 
       
         ///Recorrido de names
@@ -400,6 +411,84 @@ function add_item()
         });
          
 }
+
+function recalcular()
+{
+
+  // Seleccionar todos los elementos con el atributo "name" igual a "cost[]"
+  var costInputs = $('input[name="cost[]"]');
+          var qtyInputs = $('input[name="qty[]"]');
+          var costos =[];
+          var qtys = [];
+          var subtotales = 0;
+          var iterador = 0;
+          // Iterar a través de los elementos y obtener sus valores
+          costInputs.each(function(index) {
+            costos[iterador] = $(this).val(); // Obtener el valor del input actual
+            iterador = iterador + 1;
+          });
+          iterador = 0;
+          qtyInputs.each(function(index) {
+            qtys[iterador] = $(this).val(); // Obtener el valor del input actual
+            iterador = iterador + 1;
+          });
+
+          for (let index = 0; index < costos.length; index++) 
+          {
+            var price = costos[index] * qtys[index];
+            console.log("el precio es: "+ price);
+            $('p[id="price[]"]').eq(index).text(price);
+
+            subtotales += price;
+            $("#subtotal").text(subtotales);
+            $("#total").text(subtotales);
+            $("#todaldue").text(subtotales);
+          }
+          
+
+
+
+        ///fin recorrido names
+    
+  var valores = {};
+
+        // Seleccionar los elementos cuyo atributo name comienza con "miCampo[".
+        $('input[name^="group-a["]').each(function () {
+            var name = $(this).attr("name");
+            var matches = name.match(/\[(\d+)\]\[([^\]]+)\]/);
+            var indice = parseInt(matches[1]);
+            var propiedad = matches[2];
+
+            if (!valores[indice]) {
+                valores[indice] = {};
+            }
+
+            valores[indice][propiedad] = $(this).val();
+            
+        });
+
+        // Haz algo con los valores, como mostrarlos en la consola.
+        console.log("Valores de los campos de entrada:");
+        console.log(valores);
+
+        var subtotal =0;
+        Object.keys(valores).forEach(function(key) {
+            console.log(key + ": " + valores[key].cost);
+            console.log(key + ": " + valores[key].qty);
+            var price = valores[key].cost * valores[key].qty;
+            console.log(price);
+            
+            $('p[id="price[]"]').eq(key).text(price);
+            
+            subtotal += price; 
+            $("#subtotal").text(subtotal);
+            $("#total").text(subtotal);
+            $("#todaldue").text(subtotal);
+        });
+        
+
+}
+
 
       //Capturamos la fecha en los inputs ocultos del formulario.
       

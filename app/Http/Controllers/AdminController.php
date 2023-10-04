@@ -5,11 +5,13 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use App\Models\User;
+use Spatie\Permission\Models\Role;
 use App\Models\Client;
 use App\Models\Country;
 use App\Models\Company;
 use App\Models\PaymentMethod;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Hash;
 use Validator;
 
 class AdminController extends Controller
@@ -226,4 +228,33 @@ class AdminController extends Controller
     {
         return view("admin.login.two-steps");
     } 
+
+    //MANAGE USERS
+
+    public function show_users()
+    {
+        $users = User::all();
+        $roles = Role::all();
+        $total_users = $users->count();
+
+        return view('admin.users.index', compact('users','total_users','roles'));
+    }
+
+    public function store_user(Request $request)
+    {
+        $rol = Role::find($request->rol);
+        
+        $user = new User;
+        $user->name= $request->name;
+        $user->lastname= $request->lastname;
+        $user->email= $request->email;
+        $user->nick= $request->nick;
+        $user->password = Hash::make($request->password);
+        $user->save();
+        
+        $user->assignRole($rol->name);
+
+        return redirect()->route('admin.show.users')->with('jsAlert', "User successfully created");
+
+    }
 }

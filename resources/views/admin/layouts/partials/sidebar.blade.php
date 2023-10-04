@@ -140,13 +140,13 @@
 
             <li class="menu-item">
               <a href="javascript:void(0);" class="menu-link menu-toggle">
-                <i class="fa-solid fa-house-lock fa-lg" style="color: #6f6b7d;"></i>&nbsp;&nbsp;
+                <i class="fal fa-house fa-lg" style="color: #6f6b7d;"></i>&nbsp;&nbsp;
                 <div data-i18n="Admin">Admin</div>
                 <!--<div class="badge bg-label-danger rounded-pill ms-auto">4</div>-->
               </a>
               <ul class="menu-sub">
                 <li class="menu-item">
-                  <a href="#" class="menu-link">
+                  <a href="{{route('admin.show.users')}}" class="menu-link">
                     <div>Users</div>
                   </a>
                 </li>
