@@ -38,7 +38,7 @@
         <!-- Drag Target Area To SlideIn Menu On Small Screens -->
         <div class="drag-target"></div>
     </div>
-    @include('layouts.partials.scripts')
+    @include('admin.layouts.partials.scripts')
 
     @yield('scripts')
 </body>    

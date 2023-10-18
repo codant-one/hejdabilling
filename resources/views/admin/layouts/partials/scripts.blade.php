@@ -67,12 +67,36 @@
 <script src="{{ asset('/assets/js/main.js') }}"></script>
 <!-- Page JS -->
 
-<script src="{{ asset('/assets/js/pages-auth.js') }}"></script>
-<script src="{{ asset('/assets/js/modal-two-factor-auth.js') }}"></script>
+<!-- Page JS -->
+<!-- <script src="{{ asset('/assets/js/dashboards-analytics.js') }}"></script> -->
 
-@if(request()->route()->uri === 'admin/2fa')
-  <script src="{{ asset('/assets/js/pages-auth-two-steps.js') }}"></script>
-@endif
+<!-- <script src="{{ asset('/assets//js/pages-pricing.js') }}"></script> -->
+<script src="{{ asset('/assets/js/pages-auth.js') }}"></script>
+<script src="{{ asset('/assets/js/pages-profile.js') }}"></script>
+
+<!-- <script src="{{ asset('/assets/js/modal-add-new-cc.js') }}"></script> -->
+<!-- <script src="{{ asset('/assets/js/modal-add-new-address.js') }}"></script> -->
+<!-- <script src="{{ asset('/assets/js/modal-edit-user.js') }}"></script> -->
+<!-- <script src="{{ asset('/assets/js/modal-enable-otp.js') }}"></script> -->
+<!-- <script src="{{ asset('/assets/js/modal-share-project.js') }}"></script> -->
+<!-- <script src="{{ asset('/assets/js/modal-create-app.js') }}"></script> -->
+
+<!-- <script src="{{ asset('/assets/js/offcanvas-send-invoice.js') }}"></script> -->
+<script src="{{ asset('/assets/js/app-invoice-add.js') }}"></script>
+
+<!-- <script src="{{ asset('/assets/js/pages-account-settings-account.js') }}"></script> -->
+<!-- <script src="{{ asset('/assets/js/app-user-list.js') }}"></script> -->
+
+<!-- <script src="{{ asset('/assets/js/ui-navbar.js') }}"></script> -->
+<script src="{{ asset('/assets/js/offcanvas-add-payment.js') }}"></script>
+<!-- <script src="{{ asset('/assets/js/offcanvas-send-invoice.js') }}"></script> -->
+<!--------------------------fin public/js---------------->
+
+<!----------------- JS DASHBOARD ADMIN----------------------------->
+
+<!-----------------FIN JS DASHBOARD ADMIN----------------------------->
+
+
 
 @if(session()->has('jsAlert'))
                 <script>
