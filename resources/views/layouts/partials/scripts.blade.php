@@ -1,10 +1,15 @@
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-U1DAWAznBHeqEIlVSCgzq+c9gqGAJn5c/t99JyeKa9xxaYpSvHU5awsuZVVFIhvj" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js" integrity="sha384-eMNCOe7tC1doHpGoWe/6oMVemdAVTMs2xqW4mwXrXsW0L84Iytr2wi5v2QjrP/xp" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.min.js" integrity="sha384-cn7l7gDp0eyniUwwAZgrzD06kc/tftFf19TOAs2zVinnD/C7E91j9yyk5//jjpt/" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-<script src="https://kit.fontawesome.com/d77b722d2c.js" crossorigin="anonymous"></script>
+<!-- Helpers -->
+    
+<script src="{{asset('/assets/vendor/js/helpers.js')}}"></script>
+
+<!--! Template customizer & Theme config files MUST be included after core stylesheets and helpers.js in the <head> section -->
+<!--? Template customizer: To hide customizer set displayCustomizer value false in config.js.  -->
+<script src="{{asset('/assets/vendor/js/template-customizer.js')}}"></script>
+<!--? Config:  Mandatory theme config file contain global vars & default theme options, Set your preferred theme option in this file.  -->
+<script src="{{asset('/assets/js/config.js')}}"></script>
+
 <!--ALERTAS-->
-<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<!-- <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script> -->
 
 <script src="{{ asset('/assets/js/fakit.js') }}"></script>
 
@@ -17,14 +22,21 @@
     <script src="{{ asset('/assets/vendor/js/bootstrap.js') }}"></script>
     <script src="{{ asset('/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js') }}"></script>
     <script src="{{ asset('/assets/vendor/libs/node-waves/node-waves.js') }}"></script>
+
     <script src="{{ asset('/assets/vendor/libs/hammer/hammer.js') }}"></script>
     <script src="{{ asset('/assets/vendor/libs/i18n/i18n.js') }}"></script>
     <script src="{{ asset('/assets/vendor/libs/typeahead-js/typeahead.js') }}"></script>
+
     <script src="{{ asset('/assets/vendor/js/menu.js') }}"></script>
 
     <!-- endbuild -->
 
     <!-- Vendors JS -->
+
+    <!-- Vendors JS -->
+    <script src="{{ asset('/assets/vendor/libs/apex-charts/apexcharts.js') }}"></script>
+    <script src="{{ asset('/assets/vendor/libs/swiper/swiper.js') }}"></script>
+
     <script src="{{ asset('/assets/vendor/libs/formvalidation/dist/js/FormValidation.min.js') }}"></script>
     <script src="{{ asset('/assets/vendor/libs/formvalidation/dist/js/plugins/Bootstrap5.min.js') }}"></script>
     <script src="{{ asset('/assets/vendor/libs/formvalidation/dist/js/plugins/AutoFocus.min.js') }}"></script>
@@ -55,33 +67,37 @@
 <script src="{{ asset('/assets/js/main.js') }}"></script>
 <!-- Page JS -->
 
-<script src="{{ asset('/assets//js/pages-pricing.js') }}"></script>
+<!-- Page JS -->
+<script src="{{ asset('/assets/js/dashboards-analytics.js') }}"></script>
+
+<!-- <script src="{{ asset('/assets//js/pages-pricing.js') }}"></script> -->
 <script src="{{ asset('/assets/js/pages-auth.js') }}"></script>
 <script src="{{ asset('/assets/js/pages-profile.js') }}"></script>
 
-<script src="{{ asset('/assets/js/modal-add-new-cc.js') }}"></script>
-<script src="{{ asset('/assets/js/modal-add-new-address.js') }}"></script>
-<script src="{{ asset('/assets/js/modal-edit-user.js') }}"></script>
-<script src="{{ asset('/assets/js/modal-enable-otp.js') }}"></script>
-<script src="{{ asset('/assets/js/modal-share-project.js') }}"></script>
-<script src="{{ asset('/assets/js/modal-create-app.js') }}"></script>
+<!-- <script src="{{ asset('/assets/js/modal-add-new-cc.js') }}"></script> -->
+<!-- <script src="{{ asset('/assets/js/modal-add-new-address.js') }}"></script> -->
+<!-- <script src="{{ asset('/assets/js/modal-edit-user.js') }}"></script> -->
+<!-- <script src="{{ asset('/assets/js/modal-enable-otp.js') }}"></script> -->
+<!-- <script src="{{ asset('/assets/js/modal-share-project.js') }}"></script> -->
+<!-- <script src="{{ asset('/assets/js/modal-create-app.js') }}"></script> -->
 <script src="{{ asset('/assets/js/modal-two-factor-auth.js') }}"></script>
 
-<script src="{{ asset('/assets/js/offcanvas-send-invoice.js') }}"></script>
+<!-- <script src="{{ asset('/assets/js/offcanvas-send-invoice.js') }}"></script> -->
 <script src="{{ asset('/assets/js/app-invoice-add.js') }}"></script>
 
-<script src="{{ asset('/assets/js/pages-auth-two-steps.js') }}"></script>
-<script src="{{ asset('/assets/js/pages-account-settings-account.js') }}"></script>
-<script src="{{ asset('/assets/js/app-user-list.js') }}"></script>
+<!-- <script src="{{ asset('/assets/js/pages-auth-two-steps.js') }}"></script> -->
+<!-- <script src="{{ asset('/assets/js/pages-account-settings-account.js') }}"></script> -->
+<!-- <script src="{{ asset('/assets/js/app-user-list.js') }}"></script> -->
 
 <script src="{{ asset('/assets/js/ui-navbar.js') }}"></script>
 <script src="{{ asset('/assets/js/offcanvas-add-payment.js') }}"></script>
-<script src="{{ asset('/assets/js/offcanvas-send-invoice.js') }}"></script>
+<!-- <script src="{{ asset('/assets/js/offcanvas-send-invoice.js') }}"></script> -->
 <!--------------------------fin public/js---------------->
 
 <!----------------- JS DASHBOARD ADMIN----------------------------->
 
 <!-----------------FIN JS DASHBOARD ADMIN----------------------------->
+
 
 
 @if(session()->has('jsAlert'))

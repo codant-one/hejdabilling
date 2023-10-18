@@ -327,6 +327,9 @@
             </div>
             <!-- / Content -->
 
+@endsection
+
+@section('scripts')
 <script>
 var contadorClones = 2;
 /*
