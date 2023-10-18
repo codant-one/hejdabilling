@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="es"
-class="light-style layout-navbar-fixed layout-menu-fixed layout-menu-collapsed"
+<html lang="en"
+class="light-style layout-navbar-fixed layout-menu-fixed"
   dir="ltr"
   data-theme="theme-default"
-  data-assets-path="{{asset('/assets\/')}}"
+  data-assets-path="{{ asset('assets\/') }}"
   data-template="vertical-menu-template"
 >
 
@@ -39,7 +39,6 @@ class="light-style layout-navbar-fixed layout-menu-fixed layout-menu-collapsed"
         <!-- Drag Target Area To SlideIn Menu On Small Screens -->
         <div class="drag-target"></div>
     </div>
-
     @include('layouts.partials.scripts')
 
     @yield('scripts')

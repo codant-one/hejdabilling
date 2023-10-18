@@ -113,11 +113,11 @@
                           <div class="repeater-wrapper pt-0 pt-md-4 item" id="item1">
                             <div class="d-flex border rounded position-relative pe-0">
                               <div class="row w-100 p-3">
-                                <div class="col-md-6 col-12 mb-md-0 mb-3">
+                                <div class="col-md-6 col-12 mb-md-0 mb-3" id="newdetails">
                                   <p class="mb-2 repeater-title">Item</p>
                                   <input type="text" class="form-control" name="item-details[]" placeholder="Item details"/>
                                   <!--<textarea class="form-control" rows="2" placeholder="Item Information"></textarea>-->
-        
+                                 <!--<br> <button type="button" onclick="add_input()" class="btn btn-primary">Add input</button>-->
                                 </div>
                                 <div class="col-md-3 col-12 mb-md-0 mb-3">
                                   <p class="mb-2 repeater-title">Cost</p>
@@ -282,6 +282,29 @@
                       </select>
                       <input type="hidden" name="date_hidden" id="date_hidden" value="{{ date('Y-m-d') }}" />
                       <input type="hidden" name="duedate_hidden" id="duedate_hidden" value="{{$fechaSumada}}" />
+
+                      <small class="text-light fw-semibold d-block">Payment Method</small>
+                        <div class="form-check form-check-inline mt-3">
+                          <input
+                            class="form-check-input"
+                            type="radio"
+                            name="mode_payment"
+                            id="inlineRadio1"
+                            value="FAKTURA"
+                          />
+                          <label class="form-check-label" for="inlineRadio1">Transfer or Swish</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                          <input
+                            class="form-check-input"
+                            type="radio"
+                            name="mode_payment"
+                            id="inlineRadio2"
+                            value="KONTANTFAKTURA"
+                          />
+                          <label class="form-check-label" for="inlineRadio2">Cash</label>
+                        </div>
+                        <br> <br> 
                       @csrf
                       <button
                         type="submit"
@@ -306,6 +329,28 @@
 
 <script>
 var contadorClones = 2;
+/*
+function add_input()
+{
+
+  // Obtén el formulario y el campo de entrada original
+  var formulario = document.getElementById('formularioFactura');
+  var campoOriginal = formulario.querySelector('input[name="item-details[]"]');
+  if (campoOriginal) {
+    // Clona el campo original
+    var nuevoCampo = campoOriginal.cloneNode(true);
+    
+    // Cambia el valor del atributo "name" en el campo duplicado
+    nuevoCampo.setAttribute('name', 'item-details[]'+'input[]');
+    
+    // Limpia el valor del campo duplicado (opcional)
+    nuevoCampo.value = '';
+    
+    // Agrega el nuevo campo al formulario
+    $('#newdetails').append(nuevoCampo);
+  }
+
+}*/
 function add_item()
 {
         var aux = contadorClones;

@@ -142,6 +142,7 @@ class InvoiceController extends Controller
         $invoice->due_date = $due_date;
         $invoice->num_invoice = $cant_invoice;
         $invoice->total = $subtotal;
+        $invoice->mode_payment = $request->mode_payment;
         $invoice->save();
        
 
@@ -353,6 +354,7 @@ class InvoiceController extends Controller
         $invoice->due_date = $due_date;
         $invoice->num_invoice = $cant_invoice;
         $invoice->total = $subtotal;
+        $invoice->mode_payment = $request->mode_payment;
         $invoice->save();
        
 

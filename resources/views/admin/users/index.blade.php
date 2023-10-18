@@ -59,8 +59,8 @@
                                     <td>{{$user->email}}</td>
                                     <td>{{ $user->nick }}</td>                                    
                                     <td>
-                                      <p><a href="#"><i class="fa-regular fa-eye fa-lg"></i></a>
-                                        <a href="#"><i class="fa-regular fa-pen-to-square fa-lg" style="color: #2e0684;"></i></a>
+                                      <p><a href="{{route('admin.invoices.user',$user->id)}}"><i class="fa-regular fa-eye fa-lg"></i></a>
+                                        <!--<a href="#"><i class="fa-regular fa-pen-to-square fa-lg" style="color: #2e0684;"></i></a>-->
                                     </td>                                    
                                 </tr>
                             @endforeach

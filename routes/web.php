@@ -57,6 +57,7 @@ Route::middleware(['auth'])->group(function ()
 
     Route::get('/admin/users',[AdminController::class, 'show_users'])->name('admin.show.users');
     Route::post('/admin/add-user',[AdminController::class, 'store_user'])->name('admin.add.user');
+    Route::get('/admin/invoices/user/{id}',[AdminController::class, 'invoices_user'])->name('admin.invoices.user');
 });
 
 Route::name('auth.')->middleware(['auth'])->group(function () {

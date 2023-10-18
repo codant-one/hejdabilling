@@ -7,7 +7,7 @@
     }
     body
     {
-        background-color:#F8F9FD;
+        background-color:#FFFFFF;
         padding: 20px;
         font-family: Verdana, Geneva, Tahoma, sans-serif;
     }
@@ -87,8 +87,12 @@
                 <td>
                     <table width="100%">
                         <tr>
-                            <td width="50%"><img src="{{asset('storage/'.$company->logo) }}" width="60%" alt="logo-main"></td>
+                            <td width="50%"><img src="{{asset('storage/'.$company->logo) }}" width="auto" height="70" alt="logo-main"></td>
+                            @if($invoices->mode_payment)
+                            <td width="50%" style="text-align: right;"><span class="title-header">{{$invoices->mode_payment}}</span></td>
+                            @else
                             <td width="50%" style="text-align: right;"><span class="title-header">FAKTURA</span></td>
+                            @endif
                         </tr>
                         
                     </table>
@@ -98,7 +102,7 @@
             <!------------------------TABLE DATA FROM--------------------->
             <tr>
                 <td>
-                    <table width="100%" style="margin-top:50px">
+                    <table width="100%" style="margin-top:10px">
                         <tr>
                             <td width="65%" class="data-from">
                                 <table width="100%">

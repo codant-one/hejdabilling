@@ -10,6 +10,7 @@ use App\Models\Client;
 use App\Models\Country;
 use App\Models\Company;
 use App\Models\PaymentMethod;
+use App\Models\Invoice;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Hash;
 use Validator;
@@ -255,6 +256,18 @@ class AdminController extends Controller
         $user->assignRole($rol->name);
 
         return redirect()->route('admin.show.users')->with('jsAlert', "User successfully created");
+
+    }
+
+    public function invoices_user($id)
+    {
+        $user = User::with(['user_client'])->where('id',$id)->first();
+        $invoices = Invoice::whereHas('client.user', function ($query) use ($user) {
+            $query->where('user_id', $user->id);
+        })->get();
+        $due_total = $invoices->sum('total');
+        $total_invoices = $invoices->count();
+        return view('admin.users.invoices', compact('invoices','due_total','total_invoices','user'));
 
     }
 }

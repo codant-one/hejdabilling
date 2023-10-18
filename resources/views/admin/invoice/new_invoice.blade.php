@@ -113,19 +113,17 @@
                           <div class="repeater-wrapper pt-0 pt-md-4 item" id="item1">
                             <div class="d-flex border rounded position-relative pe-0">
                               <div class="row w-100 p-3">
-                                <div class="col-md-6 col-12 mb-md-0 mb-3">
+                                <div class="col-md-5 col-12 mb-md-0 mb-3">
                                   <p class="mb-2 repeater-title">Item</p>
                                   <input type="text" class="form-control" name="item-details[]" placeholder="Item details"/>
                                   <!--<textarea class="form-control" rows="2" placeholder="Item Information"></textarea>-->
         
                                 </div>
-                                <div class="col-md-3 col-12 mb-md-0 mb-3">
+                                <div class="col-md-2 col-12 mb-md-0 mb-3">
                                   <p class="mb-2 repeater-title">Cost</p>
                                   <input
-                                    type="number"
+                                    type="text"
                                     class="form-control invoice-item-price mb-3"
-                                    placeholder="00"
-                                    min="12"
                                     name="cost[]"
                                   />
                                   <!--<div>
@@ -143,19 +141,54 @@
                                     >
                                   </div>-->
                                 </div>
-                                <div class="col-md-2 col-12 mb-md-0 mb-3">
+                                <div class="col-md-1 col-12 mb-md-0 mb-3">
                                   <p class="mb-2 repeater-title">Qty</p>
                                   <input
-                                    type="number"
+                                    type="text"
                                     class="form-control invoice-item-qty"
                                     placeholder="1"
-                                    min="1"
-                                    max="50"
                                     name="qty[]"
                                   />
                                 </div>
+
+                                <div class="col-md-1 col-12 mb-md-0 mb-3">
+                                  <p class="mb-2 repeater-title">Tax</p>
+                                  <select name="tax[]" class="form-select">
+                                          <option value="0" selected>0%</option>
+                                          <option value="6">1%</option>
+                                          <option value="12">10%</option>
+                                          <option value="25">25%</option>
+                                        </select>
+                                </div>
+
+                                <div class="col-md-2 col-12 mb-md-0 mb-3">
+                                  <p class="mb-2 repeater-title">Disccount</p>
+                                  <select name="disc[]" class="form-select">
+                                          <option value="0" selected>0%</option>
+                                          <option value="5">5%</option>
+                                          <option value="10">10%</option>
+                                          <option value="15">15%</option>
+                                          <option value="20">20%</option>
+                                          <option value="25">25%</option>
+                                          <option value="30">30%</option>
+                                          <option value="35">35%</option>
+                                          <option value="40">40%</option>
+                                          <option value="45">45%</option>
+                                          <option value="50">50%</option>
+                                          <option value="55">55%</option>
+                                          <option value="60">60%</option>
+                                          <option value="65">65%</option>
+                                          <option value="70">70%</option>
+                                          <option value="75">75%</option>
+                                          <option value="80">80%</option>
+                                          <option value="85">85%</option>
+                                          <option value="90">90%</option>
+                                          <option value="95">95%</option>
+                                        </select>
+                                </div>
+
+
                                 <div class="col-md-1 col-12 pe-0">
-                                  <p class="mb-2 repeater-title">Price</p>
                                   <p class="mb-0" name="price" id="price[]"></p>
                                 </div>
                               </div>
@@ -310,7 +343,7 @@
                       </select>
 
                       <p>Payment method</p>
-                      <select class="form-select mb-4" name="payment_mode" id="payment_mode">
+                      <select class="form-select mb-4" name="mode_payment" id="mode_payment" required>
                         <option value="">Select</option>
                         <option value="FAKTURA">Bank transfer or Swish</option>
                         <option value="KONTANTFAKTURA">Cash</option>
@@ -377,8 +410,12 @@ function add_item()
         // Seleccionar todos los elementos con el atributo "name" igual a "cost[]"
           var costInputs = $('input[name="cost[]"]');
           var qtyInputs = $('input[name="qty[]"]');
+          var taxInputs = $('input[name="tax[]"]');
+          var discInputs = $('input[name="disc[]"]');
           var costos =[];
           var qtys = [];
+          var tax = [];
+          var disc = []; 
           var subtotales = 0;
           var iterador = 0;
           // Iterar a través de los elementos y obtener sus valores
@@ -391,11 +428,28 @@ function add_item()
             qtys[iterador] = $(this).val(); // Obtener el valor del input actual
             iterador = iterador + 1;
           });
-
+      
+          iterador = 0;
+          taxInputs.each(function(index) {
+            tax[iterador] = $(this).val(); // Obtener el valor del input actual
+            iterador = iterador + 1;
+          });
+          iterador = 0;
+          discInputs.each(function(index) {
+            disc[iterador] = $(this).val(); // Obtener el valor del input actual
+            iterador = iterador + 1;
+          });
+            
           for (let index = 0; index < costos.length; index++) 
           {
             var price = costos[index] * qtys[index];
+            var taxes = price * tax[index] * 0.01;
+            var discount = price * disc[index] * 0.01;
+
             console.log("el precio es: "+ price);
+            console.log("los impuestos son: "+ taxes);
+            console.log("El descuento es: "+ discount);  
+
             $('p[id="price[]"]').eq(index).text(price);
 
             subtotales += price;
